@@ -2,9 +2,12 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "Slack is a single-page application with registration and authentication. All user actions are tracked and processed in real-time.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s ./frontend/build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd frontend && npm ci"
   },
   "author": "ArthurFloyd",
   "license": "ISC",
