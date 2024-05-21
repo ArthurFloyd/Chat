@@ -2,9 +2,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import NotFoundPage from './Errors/NotFoundPage.jsx';
+import LoginPage from './Login/LoginPage.jsx';
 
-const ChatPage = () => <div>1</div>
-const LoginPage = () => <div>2</div>
+const ChatPage = () => <div>Тут скоро будет чат</div>
+// const LoginPage = () => <div>2</div>
 // const ErrorPage = () => <div></div>
 
 function App() {
