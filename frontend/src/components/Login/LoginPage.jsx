@@ -1,36 +1,40 @@
 import React from "react";
-import { Form, Field, Formik } from "formik";
+import { useFormik } from "formik";
 
 const LoginPage = () => {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values, null, 2));
+    },
+  });
   return (
-    <Formik
-      initialValues={{ email: "", password: "" }}
-      onSubmit={({ setSubmitting }) => {
-        console.log("Form is validated! Submitting the form...");
-        setSubmitting(false);
-      }}
-    >
-      {() => (
-        <Form>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <Field
-              type="email"
-              name="email"
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <Field
-              type="password"
-              name="password"
-              className="form-control"
-            />
-          </div>
-        </Form>
-      )}
-    </Formik>
+    <form onSubmit={formik.handleSubmit}>
+      <h1 className="text-center mb-4">Войти</h1>
+      <label htmlFor="email"></label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+        placeholder="Ваш ник"
+      />
+      <label htmlFor="password"></label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        onChange={formik.handleChange}
+        value={formik.values.password}
+        placeholder="Пароль"
+      />
+
+      <button type="submit">Войти</button>
+    </form>
   );
 };
 
