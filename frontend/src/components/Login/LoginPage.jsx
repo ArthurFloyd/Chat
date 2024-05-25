@@ -1,11 +1,11 @@
-import React from "react";
-import { useFormik } from "formik";
+import React from 'react';
+import { useFormik } from 'formik';
 
 const LoginPage = () => {
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2));
@@ -14,7 +14,7 @@ const LoginPage = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <h1 className="text-center mb-4">Войти</h1>
-      <label htmlFor="email"></label>
+      {/* <label htmlFor="email"></label> */}
       <input
         id="email"
         name="email"
@@ -23,7 +23,7 @@ const LoginPage = () => {
         value={formik.values.email}
         placeholder="Ваш ник"
       />
-      <label htmlFor="password"></label>
+      {/* <label htmlFor="password"></label> */}
       <input
         id="password"
         name="password"

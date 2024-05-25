@@ -7,18 +7,16 @@ import LoginPage from './Login/LoginPage.jsx';
 
 import pathRoutes from '../routes/routes.js';
 
-const ChatPage = () => <div>Тут скоро будет чат</div>
+const ChatPage = () => <div>Тут скоро будет чат</div>;
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={pathRoutes.notFoundPagePath()} element={<NotFoundPage />} />
-        <Route path={pathRoutes.chatPagePath()} element={<ChatPage />} />
-        <Route path={pathRoutes.loginPagePath()} element={<LoginPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path={pathRoutes.notFoundPagePath()} element={<NotFoundPage />} />
+      <Route path={pathRoutes.chatPagePath()} element={<ChatPage />} />
+      <Route path={pathRoutes.loginPagePath()} element={<LoginPage />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;
