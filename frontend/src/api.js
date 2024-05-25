@@ -1,12 +1,16 @@
-// import React from "react";
-// import axios from 'axios';
+// import React from 'react';
+import axios from 'axios';
+import { chatApiRoutes } from './routes/routes.js';
 
-// const formData = {
-//   userName: 'admin',
-//   password: 'admin',
-// }
+const requestUser = async (inputData) => {
+  const { data } = await axios.post(chatApiRoutes.login(), inputData);
+  console.log('data', data);
+  const { token } = data;
+  console.log('token', token);
+  localStorage.setItem('user', token);
+  console.log('ls', localStorage);
+};
 
-// export const requestUser = async (formData) => {
-//   const { data } = await axios.post('api/v1/channels', { bo: 2 });
-//   console.log('data', data);
-// }
+const T = () => { };
+
+export { requestUser, T };
