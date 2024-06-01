@@ -4,11 +4,11 @@ import { chatApiRoutes } from './routes/routes.js';
 
 const requestUser = async (inputData) => {
   const { data } = await axios.post(chatApiRoutes.login(), inputData);
-  console.log('data', data);
+  // console.log('data', data);
   const { token } = data;
-  console.log('token', token);
+  // console.log('token', token);
   localStorage.setItem('user', token);
-  console.log('ls', localStorage);
+  // console.log('ls', localStorage);
 };
 
 const T = () => { };
