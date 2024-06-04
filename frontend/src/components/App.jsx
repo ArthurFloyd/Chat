@@ -8,6 +8,7 @@ import LoginPage from './Login/LoginPage.jsx';
 import { appRoutes } from '../routes/routes.js';
 
 const ChatPage = () => <div>Тут скоро будет чат</div>;
+const SignupPage = () => <div>Тут скоро будет регистрация</div>;
 
 const App = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const App = () => (
       <Route path={appRoutes.notFoundPagePath()} element={<NotFoundPage />} />
       <Route path={appRoutes.chatPagePath()} element={<ChatPage />} />
       <Route path={appRoutes.loginPagePath()} element={<LoginPage />} />
+      <Route path={appRoutes.signupPagePath()} element={<SignupPage />} />
     </Routes>
   </BrowserRouter>
 );
