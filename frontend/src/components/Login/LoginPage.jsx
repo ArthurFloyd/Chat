@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import {
   FloatingLabel, Form, Button, Container, Row, Col, Card, NavLink,
@@ -8,10 +8,12 @@ import { requestUser } from '../../api.js';
 import { appRoutes } from '../../routes/routes.js';
 
 const LoginPage = () => {
+  const input = useRef(null);
+
   const formik = useFormik({
     initialValues: {
-      username: 'admin',
-      password: 'admin',
+      username: '',
+      password: '',
     },
     onSubmit: async (values) => {
       console.log(JSON.stringify(values, null, 2));
@@ -22,10 +24,15 @@ const LoginPage = () => {
       } catch (error) {
         if (error.response.status === 401) {
           formik.setErrors({ email: 'incorrect credentials', password: 'incorrect credentials' });
+          input.current.select();
         }
       }
     },
   });
+
+  const handleChange = (e) => {
+    e.preventDefault();
+  };
 
   useEffect(() => {
 
@@ -41,12 +48,27 @@ const LoginPage = () => {
                 <h1 className="text-center mb-4">Войти</h1>
                 <Form.Group className="form-floating mb-3" controlId="username">
                   <FloatingLabel controlId="floatingInput" label="Ваш ник" className="mb-3">
-                    <Form.Control type="username" placeholder="name@example.com" />
+                    <Form.Control
+                      type="text"
+                      placeholder="name@example.com"
+                      onChange={(e) => {
+                        handleChange(e);
+                        formik.handleChange(e);
+                      }}
+                      ref={input}
+                    />
                   </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4" controlId="password">
                   <FloatingLabel controlId="floatingPassword" label="Пароль">
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      onChange={(e) => {
+                        handleChange(e);
+                        formik.handleChange(e);
+                      }}
+                    />
                   </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4" controlId="">
