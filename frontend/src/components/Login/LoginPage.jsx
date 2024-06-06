@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
+// import * as yup from 'yup';
 import {
   FloatingLabel, Form, Button, Container, Row, Col, Card, NavLink,
 } from 'react-bootstrap';
@@ -10,11 +11,17 @@ import { appRoutes } from '../../routes/routes.js';
 const LoginPage = () => {
   const input = useRef(null);
 
+  // const validate = yup.object().shape({
+  //   username: yup.string().trim().required(),
+  //   password: yup.string().trim().required(),
+  // });
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
+    // validate,
     onSubmit: async (values) => {
       console.log(JSON.stringify(values, null, 2));
 
@@ -22,6 +29,7 @@ const LoginPage = () => {
         const { data } = await requestUser(values);
         console.log('login data', data);
       } catch (error) {
+        formik.setSubmitting(false);
         if (error.response.status === 401) {
           formik.setErrors({ email: 'incorrect credentials', password: 'incorrect credentials' });
           input.current.select();
@@ -35,7 +43,7 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-
+    // input.current.focus();
   });
 
   return (
@@ -50,7 +58,8 @@ const LoginPage = () => {
                   <FloatingLabel controlId="floatingInput" label="Ваш ник" className="mb-3">
                     <Form.Control
                       type="text"
-                      placeholder="name@example.com"
+                      placeholder="Ваш ник"
+                      // value={formik.values.username}
                       onChange={(e) => {
                         handleChange(e);
                         formik.handleChange(e);
@@ -64,6 +73,7 @@ const LoginPage = () => {
                     <Form.Control
                       type="password"
                       placeholder="Password"
+                      // value={formik.values.password}
                       onChange={(e) => {
                         handleChange(e);
                         formik.handleChange(e);
