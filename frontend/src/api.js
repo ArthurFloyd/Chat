@@ -7,7 +7,7 @@ const requestUser = async (inputData) => {
   console.log('data', data);
   const { token } = data;
   console.log('token', token);
-  localStorage.setItem('user', token);
+  localStorage.setItem('token', token);
   console.log('ls', localStorage);
 };
 

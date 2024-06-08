@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useFormik } from 'formik';
 // import * as yup from 'yup';
 import {
-  FloatingLabel, Form, Button, Container, Row, Col, Card, NavLink,
+  Form, Button, Container, Row, Col, Card,
 } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
 import { requestUser } from '../../api.js';
 import { appRoutes } from '../../routes/routes.js';
@@ -23,7 +24,7 @@ const LoginPage = () => {
     },
     // validate,
     onSubmit: async (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      // console.log(JSON.stringify(values, null, 2));
 
       try {
         const { data } = await requestUser(values);
@@ -31,20 +32,15 @@ const LoginPage = () => {
       } catch (error) {
         formik.setSubmitting(false);
         if (error.response.status === 401) {
-          formik.setErrors({ email: 'incorrect credentials', password: 'incorrect credentials' });
+          formik.setErrors({ username: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });
           input.current.select();
         }
       }
     },
   });
 
-  const handleChange = (e) => {
-    e.preventDefault();
-  };
-
-  useEffect(() => {
-    // input.current.focus();
-  });
+  const isUsernameInvalid = formik.errors.username && formik.touched.username;
+  const isPasswordInvalid = formik.errors.password && formik.touched.password;
 
   return (
     <Container fluid className="h-100">
@@ -52,48 +48,60 @@ const LoginPage = () => {
         <Col xs={12} md={8} xxl={6}>
           <Card className="shadow-sm">
             <Card.Body className="p-5 row">
-              <Form>
+              <Form
+                className="col-12 col-md-6 mt-3 mt-mb-0"
+                onSubmit={formik.handleSubmit}
+              >
                 <h1 className="text-center mb-4">Войти</h1>
-                <Form.Group className="form-floating mb-3" controlId="username">
-                  <FloatingLabel controlId="floatingInput" label="Ваш ник" className="mb-3">
+                <fieldset disabled={formik.isSubmitting}>
+                  <Form.Group className="form-floating mb-3" controlId="username">
                     <Form.Control
                       type="text"
                       placeholder="Ваш ник"
-                      // value={formik.values.username}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.username}
+                      autoComplete="username"
+                      required
                       onChange={(e) => {
-                        handleChange(e);
+                        e.preventDefault();
                         formik.handleChange(e);
                       }}
                       ref={input}
+                      isInvalid={isUsernameInvalid}
                     />
-                  </FloatingLabel>
-                </Form.Group>
-                <Form.Group className="form-floating mb-4" controlId="password">
-                  <FloatingLabel controlId="floatingPassword" label="Пароль">
+                    <Form.Label>Ваш ник</Form.Label>
+                    <Form.Control.Feedback type="invalid" className="invalid-feedback" tooltip={isUsernameInvalid}>
+                      {formik.errors.username}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+
+                  <Form.Group className="form-floating mb-4" controlId="password">
                     <Form.Control
                       type="password"
                       placeholder="Password"
-                      // value={formik.values.password}
+                      autoComplete="current-password"
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                      required
                       onChange={(e) => {
-                        handleChange(e);
+                        e.preventDefault();
                         formik.handleChange(e);
                       }}
+                      isInvalid={isPasswordInvalid}
                     />
-                  </FloatingLabel>
-                </Form.Group>
-                <Form.Group className="form-floating mb-4" controlId="">
-                  <FloatingLabel>
-                    <Form.Control.Feedback type="invalid" className="invalid-feedback">
-                      Неверные имя пользователя или пароль
+                    <Form.Label>Пароль</Form.Label>
+                    <Form.Control.Feedback type="invalid" className="invalid-feedback" tooltip>
+                      {formik.errors.password}
                     </Form.Control.Feedback>
-                  </FloatingLabel>
-                </Form.Group>
-                <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                  </Form.Group>
+                  <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                </fieldset>
               </Form>
             </Card.Body>
             <Card.Footer className="p-4">
-              <div className="text-center text-muted">
+              <div className="text-muted text-center">
                 <span>Нет аккаунта?</span>
+                {' '}
                 <NavLink href={appRoutes.signupPagePath()}>Регистрация</NavLink>
               </div>
             </Card.Footer>
@@ -102,32 +110,6 @@ const LoginPage = () => {
       </Row>
     </Container>
   );
-
-  // return (
-  //       <form onSubmit={formik.handleSubmit}>
-  //     <h1 className="text-center mb-4">Войти</h1>
-  //     {/* <label htmlFor="email"></label> */}
-  //     <input
-  //       id="email"
-  //       name="email"
-  //       type="text"
-  //       onChange={formik.handleChange}
-  //       value={formik.values.email}
-  //       placeholder="Ваш ник"
-  //     />
-  //     {/* <label htmlFor="password"></label> */}
-  //     <input
-  //       id="password"
-  //       name="password"
-  //       type="password"
-  //       onChange={formik.handleChange}
-  //       value={formik.values.password}
-  //       placeholder="Пароль"
-  //     />
-
-  //     <button type="submit">Войти</button>
-  //   </form>
-  // )
 };
 
 export default LoginPage;
