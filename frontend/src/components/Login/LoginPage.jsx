@@ -1,17 +1,17 @@
 import React, { useRef } from 'react';
 import { useFormik } from 'formik';
+import { NavLink, useNavigate } from 'react-router-dom';
 // import * as yup from 'yup';
 import {
   Form, Button, Container, Row, Col, Card,
 } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
 
 import { requestUser } from '../../api.js';
 import { appRoutes } from '../../routes/routes.js';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const input = useRef(null);
-
   // const validate = yup.object().shape({
   //   username: yup.string().trim().required(),
   //   password: yup.string().trim().required(),
@@ -24,12 +24,16 @@ const LoginPage = () => {
     },
     // validate,
     onSubmit: async (values) => {
-      // console.log(JSON.stringify(values, null, 2));
+      console.log(JSON.stringify(values, null, 2));
 
       try {
-        const { data } = await requestUser(values);
-        console.log('login data', data);
+        const token = await requestUser(values);
+        console.log('token', token);
+        if (token) {
+          navigate(appRoutes.chatPagePath());
+        }
       } catch (error) {
+        console.log('err', error);
         formik.setSubmitting(false);
         if (error.response.status === 401) {
           formik.setErrors({ username: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });
@@ -57,7 +61,7 @@ const LoginPage = () => {
                   <Form.Group className="form-floating mb-3" controlId="username">
                     <Form.Control
                       type="text"
-                      placeholder="Ваш ник"
+                      placeholder=""
                       onBlur={formik.handleBlur}
                       value={formik.values.username}
                       autoComplete="username"
@@ -70,9 +74,6 @@ const LoginPage = () => {
                       isInvalid={isUsernameInvalid}
                     />
                     <Form.Label>Ваш ник</Form.Label>
-                    <Form.Control.Feedback type="invalid" className="invalid-feedback" tooltip={isUsernameInvalid}>
-                      {formik.errors.username}
-                    </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-4" controlId="password">

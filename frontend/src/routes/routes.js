@@ -2,7 +2,7 @@ const apiPath = '/api/v1';
 
 const chatApiRoutes = {
   login: () => [apiPath, 'login'].join('/'),
-  singup: () => [apiPath, 'singup'].join('/'),
+  singup: () => [apiPath, 'signup'].join('/'),
 };
 
 const appRoutes = {
