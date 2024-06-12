@@ -24,16 +24,16 @@ const LoginPage = () => {
     },
     // validate,
     onSubmit: async (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      // console.log(JSON.stringify(values, null, 2));
 
       try {
         const token = await requestUser(values);
-        console.log('token', token);
+        // console.log('token', token);
         if (token) {
           navigate(appRoutes.chatPagePath());
         }
       } catch (error) {
-        console.log('err', error);
+        // console.log('err', error);
         formik.setSubmitting(false);
         if (error.response.status === 401) {
           formik.setErrors({ username: 'Неверные имя пользователя или пароль', password: 'Неверные имя пользователя или пароль' });

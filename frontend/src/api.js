@@ -6,17 +6,24 @@ import { chatApiRoutes } from './routes/routes.js';
 // const savedUserData = JSON.parse(localStorage.getItem('user'));
 // const [user, setUser] = useState(savedUserData);
 
-const requestUser = async (userData) => {
+export const requestUser = async (userData) => {
   const { data } = await axios.post(chatApiRoutes.login(), userData);
-  console.log('data', data);
+  // console.log('data', data);
   const { token } = data;
   // console.log('token', token);
-  localStorage.setItem('user', token);
+  localStorage.setItem('token', token);
   // setUser(token);
   // console.log('user', user);
   return token;
 };
 
-const T = () => { };
+export const requestChannels = async () => {
+  const token = localStorage.getItem('token'); // TODO: change to 'token'
+  const { data } = await axios.get(chatApiRoutes.channels(), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-export { requestUser, T };
+  return data;
+};

@@ -6,11 +6,12 @@ import React from 'react';
 
 import NotFoundPage from './Errors/NotFoundPage.jsx';
 import LoginPage from './Login/LoginPage.jsx';
+import ChatPage from './Chat/ChatPage.jsx';
 
 import { appRoutes } from '../routes/routes.js';
 import PrivateRoute from '../routes/PrivateRoute.jsx';
 
-const ChatPage = () => <div>Тут скоро будет чат</div>;
+// const ChatPage = () => <div>Тут скоро будет чат</div>;
 const SignupPage = () => <div>Тут скоро будет регистрация</div>;
 
 const App = () => (
