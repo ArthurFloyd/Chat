@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { requestChannels } from '../../api';
+import { requestChannels, requestMessages } from '../../api';
 
-const chatPage = () => {
+const ChatPage = () => {
   useEffect(() => {
-    const data = requestChannels();
-    console.log(data);
+    requestChannels().then((data) => console.log('channels', data));
+    requestMessages().then((data) => console.log('messages', data));
   }, []);
 
   return (
@@ -12,4 +12,4 @@ const chatPage = () => {
   );
 };
 
-export default chatPage;
+export default ChatPage;

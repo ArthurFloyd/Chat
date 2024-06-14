@@ -4,6 +4,7 @@ const chatApiRoutes = {
   login: () => [apiPath, 'login'].join('/'),
   singup: () => [apiPath, 'signup'].join('/'),
   channels: () => [apiPath, 'channels'].join('/'),
+  messages: () => [apiPath, 'messages'].join('/'),
 };
 
 const appRoutes = {

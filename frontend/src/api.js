@@ -9,12 +9,12 @@ import { chatApiRoutes } from './routes/routes.js';
 export const requestUser = async (userData) => {
   const { data } = await axios.post(chatApiRoutes.login(), userData);
   // console.log('data', data);
-  const { token } = data;
+  // const { token } = data;
   // console.log('token', token);
-  localStorage.setItem('token', token);
+  localStorage.setItem('token', data.token);
   // setUser(token);
   // console.log('user', user);
-  return token;
+  return data.token;
 };
 
 export const requestChannels = async () => {
@@ -24,6 +24,15 @@ export const requestChannels = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
+  return data;
+};
 
+export const requestMessages = async () => {
+  const token = localStorage.getItem('token'); // TODO: change to 'token'
+  const { data } = await axios.get(chatApiRoutes.messages(), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return data;
 };
