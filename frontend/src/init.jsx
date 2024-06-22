@@ -1,31 +1,37 @@
 import React from 'react';
-import { io } from 'socket.io-client';
 import { Provider } from 'react-redux';
+import { io } from 'socket.io-client';
+// import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
-import App from './components/App';
+import App from './components/App.jsx';
 import store from './slices/index.js';
+import ChatApiProvider from './contexts/ChatApiProvider.jsx';
+import AuthProvider from './contexts/AuthProvider.jsx';
 
-const Init = () => {
-  const socket = io('/');
-  console.log(socket);
-  socket.connect();
-  socket.on('connect', () => {
-    console.log(socket.connected);
-    if (!socket.connect) {
-      console.error('socket con error');
+const Init = async () => {
+  // const rollbarConfig = {
+  //   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+  //   payload: {
+  //     environment: 'production',
+  //   },
+  //   captureUncaught: true,
+  //   captureUnhandledRejections: true,
+  // };
 
-      return;
-    }
-
-    socket.on('newMessage', (payload) => {
-      console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
-    });
-  });
+  const socket = io('/', { autoConnect: false });
 
   return (
+    // <RollbarProvider config={rollbarConfig}>
+    // <ErrorBoundary>
     <Provider store={store}>
-      <App />
+      <AuthProvider>
+        <ChatApiProvider socket={socket}>
+          <App />
+        </ChatApiProvider>
+      </AuthProvider>
     </Provider>
+    // </ErrorBoundary>
+    // </RollbarProvider>
   );
 };
 
