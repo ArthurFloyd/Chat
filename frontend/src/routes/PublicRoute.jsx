@@ -1,17 +1,17 @@
 import React from 'react';
+
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthProvider.jsx';
 
 import { appRoutes } from './routes.js';
 
-const PrivateRoute = () => {
+const PublicRoute = () => {
   const { loggedIn } = useAuth();
-
   return (
     loggedIn
-      ? <Outlet />
-      : <Navigate to={appRoutes.loginPagePath()} />
+      ? <Navigate to={appRoutes.chatPagePath()} />
+      : <Outlet />
   );
 };
 
-export default PrivateRoute;
+export default PublicRoute;
