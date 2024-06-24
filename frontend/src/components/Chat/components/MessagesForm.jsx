@@ -5,9 +5,8 @@ import * as yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { MdArrowForward } from 'react-icons/md';
-
-// import { useTranslation } from 'react-i18next';
-// import { useRollbar } from '@rollbar/react';
+import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import { toast } from 'react-toastify';
 
 import { useAuth } from '../../../contexts/AuthProvider.jsx';
@@ -19,8 +18,8 @@ const validationSchema = yup.object().shape({
 });
 
 const MessagesForm = ({ channelId }) => {
-  // const rollbar = useRollbar();
-  // const { t } = useTranslation();
+  const rollbar = useRollbar();
+  const { t } = useTranslation();
   const { getUserName } = useAuth();
   const { sendMessage } = useChatApi();
   const input = useRef(null);
@@ -49,8 +48,8 @@ const MessagesForm = ({ channelId }) => {
         await sendMessage(message);
         formik.resetForm();
       } catch (error) {
-        toast.error('noConnection');
-        // rollbar.error('MessageForm#sending', error);
+        toast.error(t('noConnection'));
+        rollbar.error('MessageForm#sending', error);
       } finally {
         input.current.focus();
       }
@@ -60,15 +59,15 @@ const MessagesForm = ({ channelId }) => {
   return (
     <Form className="p-3" onSubmit={formik.handleSubmit}>
       <InputGroup>
-        <Form.Label visuallyHidden htmlFor="body">messageFormPlaceholder</Form.Label>
+        <Form.Label visuallyHidden htmlFor="body">{t('messageFormPlaceholder')}</Form.Label>
         <Form.Control
           ref={input}
           onChange={formik.handleChange}
           value={formik.values.body}
           onBlur={formik.handleBlur}
           name="body"
-          placeholder="messageFormPlaceholder"
-          aria-label="newMessage"
+          placeholder={t('messageFormPlaceholder')}
+          aria-label={t('newMessage')}
           required
           className="rounded-pill w-100 pe-5 ps-3"
           id="body"
@@ -82,7 +81,7 @@ const MessagesForm = ({ channelId }) => {
           type="submit"
         >
           <MdArrowForward size="30" />
-          <span className="visually-hidden">send</span>
+          <span className="visually-hidden">{t('send')}</span>
         </Button>
       </InputGroup>
     </Form>
