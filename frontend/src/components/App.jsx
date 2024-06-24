@@ -1,29 +1,53 @@
-// import '../App.css';
-import {
-  BrowserRouter, Routes, Route,
-} from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
+import { ToastContainer, Slide } from 'react-toastify';
 
-import NotFoundPage from './Errors/NotFoundPage.jsx';
-import LoginPage from './Login/LoginPage.jsx';
 import ChatPage from './Chat/ChatPage.jsx';
+import LoginPage from './LogIn/LoginPage.jsx';
+import NotFoundPage from './Errors/NotFoundPage.jsx';
+import SignUpPage from './SignUp/SignUpPage.jsx';
+import NavBar from './common/NavBar.jsx';
 
-import { appRoutes } from '../routes/routes.js';
 import PrivateRoute from '../routes/PrivateRoute.jsx';
-
-const SignupPage = () => <div>Тут скоро будет регистрация</div>;
+import PublicRoute from '../routes/PublicRoute.jsx';
+import { appRoutes } from '../routes/routes.js';
 
 const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route element={<PrivateRoute />}>
-        <Route path={appRoutes.chatPagePath()} element={<ChatPage />} />
-      </Route>
-      <Route path={appRoutes.loginPagePath()} element={<LoginPage />} />
-      <Route path={appRoutes.signupPagePath()} element={<SignupPage />} />
-      <Route path={appRoutes.notFoundPagePath()} element={<NotFoundPage />} />
-    </Routes>
-  </BrowserRouter>
+  <Router>
+    <div className="d-flex flex-column h-100">
+      <NavBar />
+      <Routes>
+        <Route element={<PrivateRoute />}>
+          <Route path={appRoutes.chatPagePath()} element={<ChatPage />} />
+        </Route>
+        <Route element={<PublicRoute />}>
+          <Route path={appRoutes.loginPagePath()} element={<LoginPage />} />
+          <Route path={appRoutes.signupPagePath()} element={<SignUpPage />} />
+        </Route>
+        <Route path={appRoutes.notFoundPagePath()} element={<NotFoundPage />} />
+      </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rt1={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Slide}
+      />
+    </div>
+  </Router>
 );
 
 export default App;
