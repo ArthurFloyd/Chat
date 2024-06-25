@@ -20,6 +20,7 @@ const AuthProvider = ({ children }) => {
       const { data } = await axios.post(chatApiRoutes.login(), userData);
       localStorage.setItem('user', JSON.stringify(data));
       setUser(data);
+      console.log();
     };
 
     const logOut = () => {

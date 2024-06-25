@@ -12,6 +12,7 @@
   "author": "ArthurFloyd",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.3"
+    "@hexlet/chat-server": "^2.0.3",
+    "react-dotenv": "^0.1.3"
   }
 }

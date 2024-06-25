@@ -24,7 +24,8 @@ const messagesSlice = createSlice({
         messagesAdapter.setAll(state, restMessages);
       })
       .addCase(fetchInitialData.fulfilled, (state, { payload }) => {
-        messagesAdapter.setAll(state, payload.messages);
+        console.log(payload);
+        messagesAdapter.setAll(state, payload);
       })
       .addCase(loadingStatusActions.unload, () => initialState);
   },
