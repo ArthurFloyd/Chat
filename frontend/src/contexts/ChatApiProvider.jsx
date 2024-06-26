@@ -54,6 +54,7 @@ const ChatApiProvider = ({ socket, children }) => {
       socket.connect();
 
       socket.on(actionsMap.newMessage(), (message) => {
+        console.log(message, socket);
         dispatch(messagesSlice.actions.addMessage(message));
       });
       socket.on(actionsMap.newChannel(), (channel) => {
@@ -72,15 +73,24 @@ const ChatApiProvider = ({ socket, children }) => {
       socket.disconnect();
     };
 
-    const getServerData = async () => {
-      const route = chatApiRoutes.data();
+    const getServerMessages = async () => {
+      const route = chatApiRoutes.messages();
       const headers = getAuthHeader();
       const response = await axios.get(route, { headers });
-      console.log(response);
+
+      return response;
+    };
+
+    const getServerChannels = async () => {
+      const route = chatApiRoutes.channels();
+      const headers = getAuthHeader();
+      const response = await axios.get(route, { headers });
+
       return response;
     };
     return ({
-      getServerData,
+      getServerChannels,
+      getServerMessages,
       connectSocket,
       sendMessage,
       createChannel,

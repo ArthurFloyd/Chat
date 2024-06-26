@@ -39,7 +39,7 @@ const customSelectors = {
   selectCurrentChannelMessages: (state) => {
     const { currentChannelId } = state.channels;
     return selectors.selectAll(state)
-      .filter(({ channelId }) => channelId === currentChannelId);
+      .filter(({ channelId }) => console.log('c', currentChannelId, channelId));
   },
 };
 

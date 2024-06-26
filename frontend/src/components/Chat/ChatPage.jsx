@@ -76,16 +76,20 @@ const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { logOut } = useAuth();
-  const { connectSocket, getServerData, disconnectSocket } = useChatApi();
+  const {
+    connectSocket, getServerChannels, getServerMessages, disconnectSocket,
+  } = useChatApi();
 
   useEffect(() => {
-    dispatch(fetchInitialData(getServerData));
+    // console.log('c', fetchInitialData(getServerChannels));
+    // console.log('m', fetchInitialData(getServerMessages));
+    dispatch(fetchInitialData(getServerChannels), fetchInitialData(getServerMessages));
     connectSocket();
 
     return () => {
       disconnectSocket();
     };
-  }, [dispatch, connectSocket, disconnectSocket, getServerData]);
+  }, [dispatch, connectSocket, disconnectSocket, getServerChannels, getServerMessages]);
 
   const loadingState = useSelector(loadingStatusSelectors.getStatus);
 
