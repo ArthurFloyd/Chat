@@ -32,13 +32,8 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchInitialData.fulfilled, (state, { payload }) => {
-        if (!(payload.length && !payload[0].channelId)) {
-          return;
-        }
-
-        console.log('CHANNELS WRITE', payload);
-        channelsAdapter.setAll(state, payload);
-        state.currentChannelId = payload[0].id;
+        channelsAdapter.setAll(state, payload.channels);
+        state.currentChannelId = payload.currentChannelId;
       })
       .addCase(loadingStatusActions.unload, () => initialState);
   },
