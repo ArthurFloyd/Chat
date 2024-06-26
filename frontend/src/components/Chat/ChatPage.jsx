@@ -83,7 +83,8 @@ const ChatPage = () => {
   useEffect(() => {
     // console.log('c', fetchInitialData(getServerChannels));
     // console.log('m', fetchInitialData(getServerMessages));
-    dispatch(fetchInitialData(getServerChannels), fetchInitialData(getServerMessages));
+    dispatch(fetchInitialData(getServerChannels));
+    dispatch(fetchInitialData(getServerMessages));
     connectSocket();
 
     return () => {

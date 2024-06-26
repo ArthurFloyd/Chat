@@ -5,6 +5,7 @@ const fetchInitialData = createAsyncThunk(
   async (fetchServerData, { rejectWithValue }) => {
     try {
       const { data } = await fetchServerData();
+
       return data;
     } catch (error) {
       if (error.isAxiosError) {

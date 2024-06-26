@@ -54,7 +54,7 @@ const ChatApiProvider = ({ socket, children }) => {
       socket.connect();
 
       socket.on(actionsMap.newMessage(), (message) => {
-        console.log(message, socket);
+        // console.log(message, socket);
         dispatch(messagesSlice.actions.addMessage(message));
       });
       socket.on(actionsMap.newChannel(), (channel) => {

@@ -24,7 +24,11 @@ const messagesSlice = createSlice({
         messagesAdapter.setAll(state, restMessages);
       })
       .addCase(fetchInitialData.fulfilled, (state, { payload }) => {
-        console.log(payload);
+        if (!(payload.length && payload[0].channelId)) {
+          return;
+        }
+
+        console.log('MSGS WRITE', payload);
         messagesAdapter.setAll(state, payload);
       })
       .addCase(loadingStatusActions.unload, () => initialState);
@@ -37,9 +41,13 @@ const selectors = messagesAdapter.getSelectors((state) => state.messages);
 const customSelectors = {
   selectAllMesagges: selectors.selectAll,
   selectCurrentChannelMessages: (state) => {
+    console.log('!', state);
+
     const { currentChannelId } = state.channels;
-    return selectors.selectAll(state)
-      .filter(({ channelId }) => console.log('c', currentChannelId, channelId));
+    const allMessages = selectors.selectAll(state);
+
+    return allMessages
+      .filter(({ channelId }) => channelId === currentChannelId);
   },
 };
 
