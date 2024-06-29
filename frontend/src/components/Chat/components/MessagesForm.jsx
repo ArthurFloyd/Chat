@@ -8,7 +8,10 @@ import { MdArrowForward } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
+import { chatApiRoutes } from '../../../routes/routes.js';
+// import { postServerMessage } from '../../../contexts/ChatApiProvider.jsx';
 import { useAuth } from '../../../contexts/AuthProvider.jsx';
 import { useChatApi } from '../../../contexts/ChatApiProvider.jsx';
 import { selectors as channelsSelectors } from '../../../slices/channelsSlice.js';
@@ -37,6 +40,22 @@ const MessagesForm = ({ channelId }) => {
     validationSchema,
     validateOnMount: true,
     onSubmit: async ({ body }) => {
+      // ChatApiProvider.postServerMessage();
+      // console.log(ChatApiProvider);
+
+      await axios.post(
+        chatApiRoutes.messages(),
+        { ...formik.values, channelId, username: getUserName() },
+        {
+          headers: {
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxOTQwNDQ4OH0.pBMns65VV1yfFcWlmh5cCbPnCG7F1Zyzt4kYWLEn8X8',
+          },
+        },
+      ).then((response) => {
+        console.log(response.data);
+      });
+      // input.current.Control();
+      formik.resetForm();
       const cleanedMessage = leoProfanity.clean(body);
       const message = {
         body: cleanedMessage,

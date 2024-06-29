@@ -10,7 +10,7 @@ import { Rings } from 'react-loader-spinner';
 import Channels from './components/Channels.jsx';
 import Messages from './components/Messages.jsx';
 import Modal from '../common/Modal/index.js';
-import fetchInitialData from '../../slices/thunks.js';
+import { fetchInitialChannels, fetchInitialMessages } from '../../slices/thunks.js';
 import { useAuth } from '../../contexts/AuthProvider.jsx';
 
 import { useChatApi } from '../../contexts/ChatApiProvider.jsx';
@@ -53,6 +53,7 @@ const InnerContent = () => {
   const channels = useSelector(channelsSelectors.selectAllChannels);
   const currentChannel = useSelector(channelsSelectors.selectCurrentChannel);
   const currentChannelMessages = useSelector(messagesSelectors.selectCurrentChannelMessages);
+  // console.log('currentChannelMessages', currentChannelMessages, currentChannel);
 
   switch (loadingState) {
     case statusesMap.successful:
@@ -83,8 +84,8 @@ const ChatPage = () => {
   useEffect(() => {
     // console.log('c', fetchInitialData(getServerChannels));
     // console.log('m', fetchInitialData(getServerMessages));
-    dispatch(fetchInitialData(getServerChannels));
-    dispatch(fetchInitialData(getServerMessages));
+    dispatch(fetchInitialChannels(getServerChannels));
+    dispatch(fetchInitialMessages(getServerMessages));
     connectSocket();
 
     return () => {

@@ -9,8 +9,11 @@ import {
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+
 import { useChatApi } from '../../../contexts/ChatApiProvider.jsx';
 import { selectors as channelSelectors } from '../../../slices/channelsSlice.js';
+import { chatApiRoutes } from '../../../routes/routes.js';
 
 const Add = ({ handleClose }) => {
   const rollbar = useRollbar();
@@ -42,6 +45,16 @@ const Add = ({ handleClose }) => {
     validateOnChange: false,
     onSubmit: async ({ name }) => {
       const cleanedName = leoProfanity.clean(name);
+      await axios.post(chatApiRoutes.channels(), formik.values, {
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxOTQwNDQ4OH0.pBMns65VV1yfFcWlmh5cCbPnCG7F1Zyzt4kYWLEn8X8',
+        },
+      }).then((response) => {
+        console.log(response.data);
+      });
+      formik.resetForm();
+      handleClose();
+
       try {
         await createChannel(cleanedName);
         handleClose();

@@ -81,6 +81,14 @@ const ChatApiProvider = ({ socket, children }) => {
       return response;
     };
 
+    // const postServerMessage = async () => {
+    //   const route = chatApiRoutes.messages();
+    //   const headers = getAuthHeader();
+    //   const response = await axios.post(route, { headers });
+
+    //   return response;
+    // };
+
     const getServerChannels = async () => {
       const route = chatApiRoutes.channels();
       const headers = getAuthHeader();
@@ -91,6 +99,7 @@ const ChatApiProvider = ({ socket, children }) => {
     return ({
       getServerChannels,
       getServerMessages,
+      // postServerMessage,
       connectSocket,
       sendMessage,
       createChannel,

@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const fetchInitialData = createAsyncThunk(
-  'fetchInitialData',
-  async (fetchServerData, { rejectWithValue }) => {
+export const fetchInitialChannels = createAsyncThunk(
+  'fetchInitialChannels',
+  async (getServerChannels, { rejectWithValue }) => {
     try {
-      const { data } = await fetchServerData();
+      const { data } = await getServerChannels();
 
       return data;
     } catch (error) {
@@ -15,5 +15,18 @@ const fetchInitialData = createAsyncThunk(
     }
   },
 );
+export const fetchInitialMessages = createAsyncThunk(
+  'fetchInitialMessages',
+  async (getServerMessages, { rejectWithValue }) => {
+    try {
+      const { data } = await getServerMessages();
 
-export default fetchInitialData;
+      return data;
+    } catch (error) {
+      if (error.isAxiosError) {
+        return rejectWithValue(error.response.status);
+      }
+      throw error;
+    }
+  },
+);

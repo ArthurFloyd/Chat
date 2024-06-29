@@ -2,7 +2,7 @@
 "ignorePropertyModificationsFor": ["state"] }] */
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import fetchInitialData from './thunks.js';
+import { fetchInitialMessages } from './thunks.js';
 import { actions as channelsActions } from './channelsSlice.js';
 import { actions as loadingStatusActions } from './loadingStatusSlice.js';
 
@@ -21,9 +21,10 @@ const messagesSlice = createSlice({
     builder
       .addCase(channelsActions.removeChannel, (state, { payload }) => {
         const restMessages = Object.values(state.entities).filter((e) => e.channelId !== payload);
+        // console.log('pay', payload);
         messagesAdapter.setAll(state, restMessages);
       })
-      .addCase(fetchInitialData.fulfilled, (state, { payload }) => {
+      .addCase(fetchInitialMessages.fulfilled, (state, { payload }) => {
         if (!(payload.length && payload[0].channelId)) {
           return;
         }
@@ -41,13 +42,11 @@ const selectors = messagesAdapter.getSelectors((state) => state.messages);
 const customSelectors = {
   selectAllMesagges: selectors.selectAll,
   selectCurrentChannelMessages: (state) => {
-    console.log('!', state);
+    // console.log('!', state);
 
     const { currentChannelId } = state.channels;
-    const allMessages = selectors.selectAll(state);
 
-    return allMessages
-      .filter(({ channelId }) => channelId === currentChannelId);
+    return selectors.selectAll(state).filter(({ channelId }) => +channelId === +currentChannelId);
   },
 };
 

@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import { FaLock } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+// import axios from 'axios';
 
 import * as channelsSlice from '../../../slices/channelsSlice.js';
 import * as modalSlice from '../../../slices/modalSlice.js';
@@ -51,10 +52,11 @@ const Channels = ({ channels, currentChannelId }) => {
   const dispatch = useDispatch();
 
   const handleSelect = (id) => () => {
+    console.log('id', id);
     dispatch(channelsSlice.actions.setCurrentChannel(id));
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     dispatch(modalSlice.actions.open({ type: 'add' }));
   };
 

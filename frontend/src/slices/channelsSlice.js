@@ -3,7 +3,7 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 import { actions as loadingStatusActions } from './loadingStatusSlice.js';
-import fetchInitialData from './thunks.js';
+import { fetchInitialChannels } from './thunks.js';
 
 const channelsAdapter = createEntityAdapter();
 
@@ -31,9 +31,13 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInitialData.fulfilled, (state, { payload }) => {
-        channelsAdapter.setAll(state, payload.channels);
-        state.currentChannelId = payload.currentChannelId;
+      .addCase(fetchInitialChannels.fulfilled, (state, { payload }) => {
+        if (!(payload.length && !payload[0].channelId)) {
+          return;
+        }
+        // console.log('CHANNELS WRITE', payload);
+        channelsAdapter.setAll(state, payload);
+        state.currentChannelId = payload[0].id;
       })
       .addCase(loadingStatusActions.unload, () => initialState);
   },

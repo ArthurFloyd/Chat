@@ -2,7 +2,7 @@
 "ignorePropertyModificationsFor": ["state"] }] */
 
 import { createSlice } from '@reduxjs/toolkit';
-import fetchInitialData from './thunks.js';
+import { fetchInitialChannels } from './thunks.js';
 
 const statusesMap = {
   notLoaded: 'notLoaded',
@@ -24,9 +24,9 @@ const loadingStatusSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInitialData.pending, () => statusesMap.loading)
-      .addCase(fetchInitialData.fulfilled, () => statusesMap.successful)
-      .addCase(fetchInitialData.rejected, (_state, action) => {
+      .addCase(fetchInitialChannels.pending, () => statusesMap.loading)
+      .addCase(fetchInitialChannels.fulfilled, () => statusesMap.successful)
+      .addCase(fetchInitialChannels.rejected, (_state, action) => {
         if (action.payload === 401) {
           return statusesMap.authError;
         }
