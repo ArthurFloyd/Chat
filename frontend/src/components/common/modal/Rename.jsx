@@ -9,8 +9,8 @@ import { toast } from 'react-toastify';
 
 import { useSelector } from 'react-redux';
 import { useChatApi } from '../../../contexts/ChatApiProvider.jsx';
-import { selectors as channelsSelectors } from '../../../slices/channelsSlice.js';
-import { selectors as modalSelectors } from '../../../slices/modalSlice.js';
+import { selectors as channelsSelectors } from '../../../store/channelsSlice.js';
+import { selectors as modalSelectors } from '../../../store/modalSlice.js';
 
 const Rename = ({ handleClose }) => {
   const rollbar = useRollbar();

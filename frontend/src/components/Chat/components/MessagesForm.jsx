@@ -14,7 +14,7 @@ import { chatApiRoutes } from '../../../routes/routes.js';
 // import { postServerMessage } from '../../../contexts/ChatApiProvider.jsx';
 import { useAuth } from '../../../contexts/AuthProvider.jsx';
 import { useChatApi } from '../../../contexts/ChatApiProvider.jsx';
-import { selectors as channelsSelectors } from '../../../slices/channelsSlice.js';
+import { selectors as channelsSelectors } from '../../../store/channelsSlice.js';
 
 const validationSchema = yup.object().shape({
   body: yup.string().trim().required(),

@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { useChatApi } from '../../../contexts/ChatApiProvider.jsx';
-import { selectors as channelSelectors } from '../../../slices/channelsSlice.js';
+import { selectors as channelSelectors } from '../../../store/channelsSlice.js';
 import { chatApiRoutes } from '../../../routes/routes.js';
 
 const Add = ({ handleClose }) => {

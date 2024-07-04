@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { chatApiRoutes } from '../routes/routes.js';
-import * as channelsSlice from '../slices/channelsSlice.js';
-import * as messagesSlice from '../slices/messagesSlice.js';
+import * as channelsSlice from '../store/channelsSlice.js';
+import * as messagesSlice from '../store/messagesSlice.js';
 import { useAuth } from './AuthProvider.jsx';
 
 const actionsMap = {

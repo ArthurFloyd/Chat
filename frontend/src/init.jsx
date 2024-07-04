@@ -8,7 +8,7 @@ import LeoProfanity from 'leo-profanity';
 
 import App from './components/App.jsx';
 import resources from './locales/index.js';
-import store from './slices/index.js';
+import store from './store/index.js';
 import ChatApiProvider from './contexts/ChatApiProvider.jsx';
 import AuthProvider from './contexts/AuthProvider.jsx';
 

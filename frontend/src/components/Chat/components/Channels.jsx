@@ -8,9 +8,10 @@ import { FaLock } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 // import axios from 'axios';
 
-import * as channelsSlice from '../../../slices/channelsSlice.js';
-import * as modalSlice from '../../../slices/modalSlice.js';
+import * as channelsSlice from '../../../store/channelsSlice.js';
+import * as modalSlice from '../../../store/modalSlice.js';
 import ChannelName from '../../common/ChannelName.jsx';
+import { useGetChannelQuery } from '../../../api/channelsApi.js';
 
 const PersistentChannel = ({
   name, isActive, variant, onSelect,
@@ -48,17 +49,24 @@ const RemovableChannel = ({
 };
 
 const Channels = ({ channels, currentChannelId }) => {
+  console.log('channels');
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const { data = [], isError } = useGetChannelQuery();
+  console.log('get', data);
+
+  if (isError) return console.log('err', isError);
 
   const handleSelect = (id) => () => {
     console.log('id', id);
     dispatch(channelsSlice.actions.setCurrentChannel(id));
   };
+  const handleGet = () => () => console.log('get', data);
 
-  const handleAdd = async () => {
-    dispatch(modalSlice.actions.open({ type: 'add' }));
-  };
+  // const handleAdd = async () => {
+  //   dispatch(modalSlice.actions.open({ type: 'add' }));
+  // };
 
   const handleRename = (id, name) => () => {
     const context = {
@@ -82,7 +90,7 @@ const Channels = ({ channels, currentChannelId }) => {
     <Col xs={4} md={3} className="border-end p-0 bg-light d-flex flex-column">
       <div className="ps-3 pe-2 pt-5 pb-2 d-flex justify-content-between align-items-center">
         <div className="text-truncate"><b>{t('channels')}</b></div>
-        <Button variant="outline-primary" className="rounded-circle p-0 d-flex align-items-center" onClick={handleAdd}>
+        <Button variant="outline-primary" className="rounded-circle p-0 d-flex align-items-center" onClick={handleGet}>
           <BsPlusCircle />
           <span className="visually-hidden">+</span>
         </Button>

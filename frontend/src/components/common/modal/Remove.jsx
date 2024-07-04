@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import { useChatApi } from '../../../contexts/ChatApiProvider.jsx';
 import ChannelName from '../ChannelName.jsx';
-import { selectors as modalSelectors } from '../../../slices/modalSlice.js';
+import { selectors as modalSelectors } from '../../../store/modalSlice.js';
 
 const Remove = ({ handleClose }) => {
   const rollbar = useRollbar();

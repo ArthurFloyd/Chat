@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { chatApiRoutes } from '../routes/routes.js';
-import { actions as loadingStatusActions } from '../slices/loadingStatusSlice.js';
+import { actions as loadingStatusActions } from '../store/loadingStatusSlice.js';
 
 const AuthContext = createContext({});
 

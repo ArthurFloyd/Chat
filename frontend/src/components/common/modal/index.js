@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Modal } from 'react-bootstrap';
 
-import { selectors as modalSelectors, actions as modalActions } from '../../../slices/modalSlice.js';
+import { selectors as modalSelectors, actions as modalActions } from '../../../store/modalSlice.js';
 import Add from './Add.jsx';
 import Rename from './Rename.jsx';
 import Remove from './Remove.jsx';
