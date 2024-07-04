@@ -2,7 +2,7 @@
 "ignorePropertyModificationsFor": ["state"] }] */
 
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchInitialChannels } from './thunks.js';
+// import { fetchInitialChannels } from './thunks.js';
 
 const statusesMap = {
   notLoaded: 'notLoaded',

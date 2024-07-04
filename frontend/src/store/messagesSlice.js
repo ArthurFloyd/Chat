@@ -2,7 +2,7 @@
 "ignorePropertyModificationsFor": ["state"] }] */
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import { fetchInitialMessages } from './thunks.js';
+// import { fetchInitialMessages } from './thunks.js';
 import { actions as channelsActions } from './channelsSlice.js';
 import { actions as loadingStatusActions } from './loadingStatusSlice.js';
 

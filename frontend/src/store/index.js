@@ -8,7 +8,8 @@ import { channelsApi } from '../api/channelsApi.js';
 
 export default configureStore({
   reducer: {
-    [channelsApi.reducerPath]: channelsApi.reducer,
+    // [channelsApi.reducerPath]: channelsApi.reducer,
+    channels: channelsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
     .concat(channelsApi.middleware),

@@ -9,8 +9,9 @@ import LeoProfanity from 'leo-profanity';
 import App from './components/App.jsx';
 import resources from './locales/index.js';
 import store from './store/index.js';
-import ChatApiProvider from './contexts/ChatApiProvider.jsx';
+// import ChatApiProvider from './contexts/ChatApiProvider.jsx';
 import AuthProvider from './contexts/AuthProvider.jsx';
+import SocketProvider from './socket/SocetProvider.jsx';
 
 const userLanguage = localStorage.getItem('userLanguage');
 const DEFAULT_LANGUAGE = userLanguage ?? 'ru';
@@ -39,7 +40,7 @@ const Init = async () => {
   profanityFilter
     .add(profanityFilter.getDictionary('ru'), profanityFilter.getDictionary('en'));
 
-  const socket = io('/', { autoConnect: false });
+  const socket = io();
 
   return (
     <RollbarProvider config={rollbarConfig}>
@@ -47,9 +48,9 @@ const Init = async () => {
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
             <AuthProvider>
-              <ChatApiProvider socket={socket}>
+              <SocketProvider socket={socket}>
                 <App />
-              </ChatApiProvider>
+              </SocketProvider>
             </AuthProvider>
           </Provider>
         </I18nextProvider>

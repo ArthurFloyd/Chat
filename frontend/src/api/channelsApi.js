@@ -1,46 +1,25 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-const getTokenFromStorage = () => {
-  let token = '';
-  const userStringified = localStorage.getItem('user') || '';
-  try {
-    const user = JSON.parse(userStringified);
-    if (!(user && user.token)) {
-      return;
-    }
-
-    token = user.token;
-  } catch (error) {
-    //
-  }
-
-  // eslint-disable-next-line consistent-return
-  return token;
-};
+import useSetHeaders from '../hooksRequest/useSetHeaders';
 
 export const channelsApi = createApi({
   reducerPath: 'channels',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/channels',
-    prepareHeaders: (headers) => {
-      headers.set('Authorization', `Bearer ${getTokenFromStorage()}`);
-
-      return headers;
-    },
+    prepareHeaders: useSetHeaders,
+    tagTypes: ['Channels'],
   }),
   endpoints: (builder) => ({
-    getChannel: builder.query({
+    getChannels: builder.query({
       query: () => '',
+      providesTags: ['Channels'],
     }),
-  //   getChannelByIp: builder.query({
-  //     query: (id) => id,
-  //   }),
-  //   addChannel: builder.mutation({
-  //     query: (name) => ({
-  //       method: 'POST',
-  //       body: name,
-  //     }),
-  //   }),
+    addChannel: builder.mutation({
+      query: (channelName) => ({
+        method: 'POST',
+        body: channelName,
+        invalidatesTags: ['Channels'],
+      }),
+    }),
   //   removeChannel: builder.mutation({
   //     query: (id) => ({
   //       url: id,
@@ -59,7 +38,7 @@ export const channelsApi = createApi({
 export const {
   useGetChannelQuery,
   // useGetChannelByIpQuery,
-  // useAddChannelMutation,
+  useAddChannelMutation,
   // useRemoveChannelMutation,
   // useEditChannelMutation,
 } = channelsApi;
