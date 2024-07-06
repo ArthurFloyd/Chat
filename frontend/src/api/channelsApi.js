@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import useSetHeaders from '../hooks/useSetHeaders';
 
-export const homeChannelsApi = createApi({
+export const channelsApi = createApi({
   reducerPath: 'channels',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/channels',
@@ -43,4 +43,4 @@ export const {
   useAddChannelMutation,
   // useEditChannelMutation,
   // useRemoveChannelMutation,
-} = homeChannelsApi;
+} = channelsApi;
