@@ -17,7 +17,7 @@ export const messagessApi = createApi({
         body: newMessage,
       }),
     }),
-    // editMessage: builder.mutation({
+    // editMessage: builder.mutation({s
     //   query: (id, editedMessage) => ({
     //     url: id,
     //     method: 'POST',
