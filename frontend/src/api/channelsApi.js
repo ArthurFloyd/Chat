@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import useSetHeaders from '../hooksRequest/useSetHeaders';
+import useSetHeaders from '../hooks/useSetHeaders';
 
-export const channelsApi = createApi({
+export const homeChannelsApi = createApi({
   reducerPath: 'channels',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/channels',
@@ -14,31 +14,33 @@ export const channelsApi = createApi({
       providesTags: ['Channels'],
     }),
     addChannel: builder.mutation({
-      query: (channelName) => ({
+      query: (newChannel) => ({
         method: 'POST',
-        body: channelName,
+        body: newChannel,
         invalidatesTags: ['Channels'],
       }),
     }),
-  //   removeChannel: builder.mutation({
-  //     query: (id) => ({
-  //       url: id,
-  //       method: 'DELETE',
-  //     }),
-  //   }),
-  //   editChannel: builder.mutation({
-  //     query: (name) => ({
-  //       body: name,
-  //       method: 'PATCH',
-  //     }),
-  //   }),
+    // editChannel: builder.mutation({
+    //   query: ({ id, ...body }) => ({
+    //     url: id,
+    //     method: 'PATCH',
+    //     body,
+    //     invalidatesTags: ['Channels'],
+    //   }),
+    // }),
+    // removeChannel: builder.mutation({
+    //   query: ({ id }) => ({
+    //     url: id,
+    //     method: 'DELETE',
+    //     invalidatesTags: ['Channels'],
+    //   }),
+    // }),
   }),
 });
 
 export const {
-  useGetChannelQuery,
-  // useGetChannelByIpQuery,
+  useGetChannelsQuery,
   useAddChannelMutation,
-  // useRemoveChannelMutation,
   // useEditChannelMutation,
-} = channelsApi;
+  // useRemoveChannelMutation,
+} = homeChannelsApi;

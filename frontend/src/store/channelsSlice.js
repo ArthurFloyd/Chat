@@ -3,7 +3,7 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 import { actions as loadingStatusActions } from './loadingStatusSlice.js';
-import { fetchInitialChannels } from './thunks.js';
+// import { fetchInitialChannels } from './thunks.js';
 
 const channelsAdapter = createEntityAdapter();
 
