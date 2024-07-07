@@ -6,12 +6,12 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 // import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import LeoProfanity from 'leo-profanity';
 
-import App from './components/App.jsx';
+import App from './App.jsx';
 import resources from './locales/index.js';
 import store from './store/index.js';
 // import ChatApiProvider from './contexts/ChatApiProvider.jsx';
 import AuthProvider from './contexts/AuthProvider.jsx';
-import SocketProvider from './socket/SocetProvider.jsx';
+import SocketProvider from './contexts/socket/SocetProvider.jsx';
 
 const userLanguage = localStorage.getItem('userLanguage');
 const DEFAULT_LANGUAGE = userLanguage ?? 'ru';
