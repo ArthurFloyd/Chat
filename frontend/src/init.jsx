@@ -10,8 +10,8 @@ import App from './App.jsx';
 import resources from './locales/index.js';
 import store from './store/index.js';
 // import ChatApiProvider from './contexts/ChatApiProvider.jsx';
-import AuthProvider from './contexts/AuthProvider.jsx';
-import SocketProvider from './contexts/socket/SocetProvider.jsx';
+import AuthProvider from './context/AuthProvider.js';
+import SocketProvider from './context/socket/SocetProvider.jsx';
 
 const userLanguage = localStorage.getItem('userLanguage');
 const DEFAULT_LANGUAGE = userLanguage ?? 'ru';
