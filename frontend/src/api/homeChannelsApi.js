@@ -20,27 +20,27 @@ export const channelsApi = createApi({
         invalidatesTags: ['Channels'],
       }),
     }),
-    // editChannel: builder.mutation({
-    //   query: ({ id, ...body }) => ({
-    //     url: id,
-    //     method: 'PATCH',
-    //     body,
-    //     invalidatesTags: ['Channels'],
-    //   }),
-    // }),
-    // removeChannel: builder.mutation({
-    //   query: ({ id }) => ({
-    //     url: id,
-    //     method: 'DELETE',
-    //     invalidatesTags: ['Channels'],
-    //   }),
-    // }),
+    editChannel: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: id,
+        method: 'PATCH',
+        body,
+        invalidatesTags: ['Channels'],
+      }),
+    }),
+    removeChannel: builder.mutation({
+      query: ({ id }) => ({
+        url: id,
+        method: 'DELETE',
+        invalidatesTags: ['Channels'],
+      }),
+    }),
   }),
 });
 
 export const {
   useGetChannelsQuery,
   useAddChannelMutation,
-  // useEditChannelMutation,
-  // useRemoveChannelMutation,
+  useEditChannelMutation,
+  useRemoveChannelMutation,
 } = channelsApi;

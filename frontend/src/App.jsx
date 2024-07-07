@@ -1,13 +1,8 @@
-import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import React from 'react';
+import { Provider, ErrorBoundary } from '@rollbar/react';
 import {
   BrowserRouter, Routes, Route,
 } from 'react-router-dom';
-// import { ToastContainer, Slide } from 'react-toastify';
-import { Provider, ErrorBoundary } from '@rollbar/react';
-
 import NotFound from './pages/NotFound.jsx';
 import Login from './pages/Login.jsx';
 import AppContainer from './components/AppContainer.jsx';

@@ -17,19 +17,19 @@ export const messagessApi = createApi({
         body: newMessage,
       }),
     }),
-    // editMessage: builder.mutation({s
-    //   query: (id, editedMessage) => ({
-    //     url: id,
-    //     method: 'POST',
-    //     body: editedMessage,
-    //   }),
-    // }),
-    // removeMessage: builder.mutation({
-    //   query: (id) => ({
-    //     url: id,
-    //     method: 'DELETE',
-    //   }),
-    // }),
+    editMessage: builder.mutation({
+      query: (id, editedMessage) => ({
+        url: id,
+        method: 'POST',
+        body: editedMessage,
+      }),
+    }),
+    removeMessage: builder.mutation({
+      query: (id) => ({
+        url: id,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
