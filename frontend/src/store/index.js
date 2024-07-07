@@ -1,21 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-// import loadingStatusReducer from './loadingStatusSlice.js';
-// import channelsReducer from './channelsSlice.js';
-// import messagesReducer from './messagesSlice.js';
-// import modalReducer from './modalSlice.js';
-import { channelsApi } from '../api/homeChannelsApi.js';
+import { authenticateApi } from '../api/authenticateApi.js';
+import { homeChannelsApi } from '../api/homeChannelsApi.js';
+import { homeMessagessApi } from '../api/homeMessagesApi.js';
+import authReducer from './slices/auth.js';
+import appReducer from './slices/app.js';
 
 export default configureStore({
   reducer: {
-    // [channelsApi.reducerPath]: channelsApi.reducer,
-    channels: channelsApi.reducer,
+    authentication: authenticateApi.reducer,
+    messages: homeMessagessApi.reducer,
+    channels: homeChannelsApi.reducer,
+    auth: authReducer,
+    app: appReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    .concat(channelsApi.middleware),
+    .concat(authenticateApi.middleware, homeChannelsApi.middleware, homeMessagessApi.middleware),
 });
-
-// channels: channelsReducer,
-// messages: messagesReducer,
-// modal: modalReducer,
-// loadingStatus: loadingStatusReducer,

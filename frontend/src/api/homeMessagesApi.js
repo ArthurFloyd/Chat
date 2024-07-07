@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import useSetHeaders from '../hooks/useSetHeaders';
 
-export const messagessApi = createApi({
+export const homeMessagessApi = createApi({
   reducerPath: 'messages',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/messages',
@@ -33,4 +33,4 @@ export const messagessApi = createApi({
   }),
 });
 
-export const { useGetMessagesQuery, useAddMessageMutation } = messagessApi;
+export const { useGetMessagesQuery, useAddMessageMutation } = homeMessagessApi;
