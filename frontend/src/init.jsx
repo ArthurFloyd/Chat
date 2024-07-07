@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+// import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import LeoProfanity from 'leo-profanity';
 
 import App from './components/App.jsx';
@@ -17,22 +17,30 @@ const userLanguage = localStorage.getItem('userLanguage');
 const DEFAULT_LANGUAGE = userLanguage ?? 'ru';
 
 const Init = async () => {
-  const rollbarConfig = {
-    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-    payload: {
-      environment: 'testenv',
-    },
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-  };
+  const socket = io();
+
+  // const rollbarConfig = {
+  //   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+  //   payload: {
+  //     environment: 'testenv',
+  //   },
+  //   captureUncaught: true,
+  //   captureUnhandledRejections: true,
+  // };
 
   const i18n = i18next.createInstance();
+
   await i18n
     .use(initReactI18next)
     .init({
       resources,
       lng: DEFAULT_LANGUAGE,
       fallbackLng: ['en', 'ru'],
+      // resources,
+      debug: false,
+      interpolation: {
+        escapeValue: false,
+      },
     });
 
   const profanityFilter = LeoProfanity;
@@ -40,22 +48,18 @@ const Init = async () => {
   profanityFilter
     .add(profanityFilter.getDictionary('ru'), profanityFilter.getDictionary('en'));
 
-  const socket = io();
-
   return (
-    <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundary>
+    <Provider store={store}>
+      <React.StrictMode>
         <I18nextProvider i18n={i18n}>
-          <Provider store={store}>
+          <SocketProvider socket={socket}>
             <AuthProvider>
-              <SocketProvider socket={socket}>
-                <App />
-              </SocketProvider>
+              <App />
             </AuthProvider>
-          </Provider>
+          </SocketProvider>
         </I18nextProvider>
-      </ErrorBoundary>
-    </RollbarProvider>
+      </React.StrictMode>
+    </Provider>
   );
 };
 
