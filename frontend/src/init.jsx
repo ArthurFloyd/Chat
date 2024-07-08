@@ -36,7 +36,6 @@ const Init = async () => {
       resources,
       lng: DEFAULT_LANGUAGE,
       fallbackLng: ['en', 'ru'],
-      // resources,
       debug: false,
       interpolation: {
         escapeValue: false,
