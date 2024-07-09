@@ -101,7 +101,7 @@ const Login = () => {
                 isInvalid={!!errors.password}
               />
               <FormLabel htmlFor="password">{t('loginPage.form.password')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{errors.password}</FormGroup>
+              <FormGroup className="invalid-tooltip">{t('loginPage.errors.wrongData')}</FormGroup>
             </FormFloating>
 
             <Button type="submit" variant="outline-primary" className="w-100" disabled={isSubmitting}>

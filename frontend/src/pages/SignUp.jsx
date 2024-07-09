@@ -81,7 +81,7 @@ const SignUp = () => {
                 autoFocus
               />
               <FormLabel htmlFor="username">{t('signupPage.form.username')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{errors.username}</FormGroup>
+              {/* <FormGroup className="invalid-tooltip">{errors.username}</FormGroup> */}
             </FormFloating>
 
             <FormFloating className="mb-3">
@@ -95,7 +95,7 @@ const SignUp = () => {
                 isInvalid={!!errors.password}
               />
               <FormLabel htmlFor="password">{t('signupPage.form.password')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{errors.password}</FormGroup>
+              {/* <FormGroup className="invalid-tooltip">{errors.password}</FormGroup> */}
             </FormFloating>
 
             <FormFloating className=" mb-4">
@@ -109,7 +109,7 @@ const SignUp = () => {
                 isInvalid={!!errors.confirmPassword}
               />
               <FormLabel htmlFor="confirmPassword">{t('signupPage.form.passwordConfirm')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{errors.confirmPassword}</FormGroup>
+              <FormGroup className="invalid-tooltip">{t('signupPage.errors.requiredField')}</FormGroup>
             </FormFloating>
             <Button type="submit" variant="outline-primary" className="w-100" disabled={isSubmitting}>
               {t('signupPage.form.registrationButton')}

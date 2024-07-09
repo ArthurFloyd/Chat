@@ -1,7 +1,7 @@
 const ruLocales = {
   translation: {
     languages: {
-      ru: 'Русский',
+      language: 'Русский',
       changeLang: 'Язык успешно изменен на',
     },
     loginPage: {

@@ -1,7 +1,7 @@
 const enLocales = {
   translation: {
     languages: {
-      ru: 'English',
+      language: 'English',
       changeLang: 'Language successfully changed to',
     },
     loginPage: {
@@ -46,7 +46,7 @@ const enLocales = {
         declineButton: 'Cancel',
         deleteButton: 'Remove',
         deleteDropMenu: 'Remove',
-        renameDropMenu: 'Rename the channel',
+        renameDropMenu: 'Rename',
         errors: {
           shortChannelName: '3 to 20 characters',
           longChannelName: '3 to 20 characters',

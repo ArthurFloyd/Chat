@@ -10,7 +10,7 @@ const NotFound = () => {
       <img src={notFound} alt="Страница не найдена" className="img-fluid" />
       <h1 className="h4 text-muted">{t('notFoundPage.header')}</h1>
       <p className="text-muted">
-        Но вы можете перейти
+        {t('notFoundPage.body')}
         {' '}
         <Link to="/">{t('notFoundPage.link')}</Link>
       </p>
