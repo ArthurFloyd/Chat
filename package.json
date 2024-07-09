@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "Slack is a single-page application with registration and authentication. All user actions are tracked and processed in real-time.",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
     "start": "start-server -s ./frontend/build",

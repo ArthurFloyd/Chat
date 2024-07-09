@@ -2,7 +2,7 @@ const enLocales = {
   translation: {
     languages: {
       language: 'English',
-      changeLang: 'Language successfully changed to',
+      changeLang: 'Language successfully changed',
     },
     loginPage: {
       loginImg: 'Sign in',

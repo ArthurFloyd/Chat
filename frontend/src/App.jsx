@@ -11,16 +11,6 @@ import Home from './pages/Home.jsx';
 import SignUp from './pages/SignUp.jsx';
 import NavBar from './components/NavBar.jsx';
 
-// import ChatPage from './XXcomponents/Chat/ChatPage.jsx';
-// import LoginPage from './XXcomponents/LogIn/LoginPage.jsx';
-// import NotFoundPage from './XXcomponents/Errors/NotFoundPage.jsx';
-// import SignUpPage from './XXcomponents/SignUp/SignUpPage.jsx';
-// import NavBar from './common/NavBar.jsx';
-
-// import PrivateRoute from './routes/PrivateRoute.jsx';
-// import PublicRoute from './routes/PublicRoute.jsx';
-// import { appRoutes } from './routes/routes.js';
-
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
   captureUncaught: true,

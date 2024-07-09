@@ -81,7 +81,6 @@ const SignUp = () => {
                 autoFocus
               />
               <FormLabel htmlFor="username">{t('signupPage.form.username')}</FormLabel>
-              {/* <FormGroup className="invalid-tooltip">{errors.username}</FormGroup> */}
             </FormFloating>
 
             <FormFloating className="mb-3">
@@ -95,7 +94,6 @@ const SignUp = () => {
                 isInvalid={!!errors.password}
               />
               <FormLabel htmlFor="password">{t('signupPage.form.password')}</FormLabel>
-              {/* <FormGroup className="invalid-tooltip">{errors.password}</FormGroup> */}
             </FormFloating>
 
             <FormFloating className=" mb-4">

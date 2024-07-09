@@ -3,13 +3,11 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-// import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import LeoProfanity from 'leo-profanity';
 
 import App from './App.jsx';
 import resources from './locales/index.js';
 import store from './store/index.js';
-// import ChatApiProvider from './contexts/ChatApiProvider.jsx';
 import AuthProvider from './context/auth/AuthProvider.jsx';
 import SocketProvider from './context/socket/SocketProvider.jsx';
 
@@ -18,15 +16,6 @@ const DEFAULT_LANGUAGE = userLanguage ?? 'ru';
 
 const Init = async () => {
   const socket = io();
-
-  // const rollbarConfig = {
-  //   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-  //   payload: {
-  //     environment: 'testenv',
-  //   },
-  //   captureUncaught: true,
-  //   captureUnhandledRejections: true,
-  // };
 
   const i18n = i18next.createInstance();
 

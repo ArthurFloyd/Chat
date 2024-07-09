@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   NavDropdown, Nav,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import useAuthContext from '../hooks/useAuthContext.js';
 
 const LanguageSelector = () => {
@@ -12,6 +13,10 @@ const LanguageSelector = () => {
 
   const handleChangeLanguage = (lng) => {
     localStorage.setItem('userLanguage', lng);
+    toast.success(t('languages.changeLang'), {
+      position: 'top-right',
+      autoClose: 2000,
+    });
     changeLanguage(lng);
   };
 
