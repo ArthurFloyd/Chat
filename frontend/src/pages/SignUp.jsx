@@ -46,7 +46,7 @@ const SignUp = () => {
           break;
         }
         case 409: {
-          setErrors({ username: ' ', password: ' ', confirmPassword: 'Такой пользователь уже существует' });
+          setErrors({ username: ' ', password: ' ', confirmPassword: t('signupPage.errors.userExists') });
           break;
         }
         default: {
@@ -107,7 +107,7 @@ const SignUp = () => {
                 isInvalid={!!errors.confirmPassword}
               />
               <FormLabel htmlFor="confirmPassword">{t('signupPage.form.passwordConfirm')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{t('signupPage.errors.requiredField')}</FormGroup>
+              <FormGroup className="invalid-tooltip">{errors.confirmPassword}</FormGroup>
             </FormFloating>
             <Button type="submit" variant="outline-primary" className="w-100" disabled={isSubmitting}>
               {t('signupPage.form.registrationButton')}
