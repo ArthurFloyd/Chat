@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import Init from './Init.jsx';
+import Init from './Init';
 
 const app = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
