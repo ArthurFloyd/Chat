@@ -4,7 +4,7 @@
   "description": "Slack is a single-page application with registration and authentication. All user actions are tracked and processed in real-time.",
   "main": "index.js",
   "scripts": {
-    "build": "pwd && ls && npm run build --prefix frontend",
+    "build": "ls frontend/src && cat frontend/src/Init.jsx && npm run build --prefix frontend",
     "start": "start-server -s ./frontend/build",
     "postinstall": "cd frontend && npm ci"
   },
