@@ -42,7 +42,7 @@ const SignUp = () => {
       const { status } = error;
       switch (status) {
         case 0: {
-          setErrors({ username: ' ', password: ' ', confirmPassword: 'Ошибка сети' });
+          setErrors({ username: ' ', password: ' ', confirmPassword: t('signupPage.errors.network') });
           break;
         }
         case 409: {
@@ -50,7 +50,7 @@ const SignUp = () => {
           break;
         }
         default: {
-          setErrors({ username: ' ', password: ' ', confirmPassword: 'Неизвестная ошибка' });
+          setErrors({ username: ' ', password: ' ', confirmPassword: t('signupPage.errors.unknown') });
           break;
         }
       }
