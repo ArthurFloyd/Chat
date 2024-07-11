@@ -22,11 +22,11 @@ const SignUp = () => {
   const setLocalStorageItem = useLocalStorage('set');
   const signupSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле'),
-    password: Yup.string().min(6, 'Не менее 6 символов').required('Обязательное поле'),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'Пароли должны совпадать').required('Обязательное поле'),
+      .min(3, t('signupPage.errors.shortUserName'))
+      .max(20, t('signupPage.errors.longUserName'))
+      .required(t('signupPage.errors.requiredField')),
+    password: Yup.string().min(6, t('signupPage.errors.shortPassword')).required(t('signupPage.errors.requiredField')),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password')], t('signupPage.errors.passwordMatch')).required('Обязательное поле'),
   });
   const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
@@ -81,6 +81,7 @@ const SignUp = () => {
                 autoFocus
               />
               <FormLabel htmlFor="username">{t('signupPage.form.username')}</FormLabel>
+              <FormGroup className="invalid-tooltip">{errors.username}</FormGroup>
             </FormFloating>
 
             <FormFloating className="mb-3">
@@ -94,6 +95,7 @@ const SignUp = () => {
                 isInvalid={!!errors.password}
               />
               <FormLabel htmlFor="password">{t('signupPage.form.password')}</FormLabel>
+              <FormGroup className="invalid-tooltip">{errors.password}</FormGroup>
             </FormFloating>
 
             <FormFloating className=" mb-4">
