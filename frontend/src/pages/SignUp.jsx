@@ -26,7 +26,7 @@ const SignUp = () => {
       .max(20, t('signupPage.errors.longUserName'))
       .required(t('signupPage.errors.requiredField')),
     password: Yup.string().min(6, t('signupPage.errors.shortPassword')).required(t('signupPage.errors.requiredField')),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password')], t('signupPage.errors.passwordMatch')).required('Обязательное поле'),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password')], t('signupPage.errors.passwordMatch')).required(t('signupPage.errors.requiredField')),
   });
   const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {
     try {

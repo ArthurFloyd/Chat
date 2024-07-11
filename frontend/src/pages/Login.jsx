@@ -47,15 +47,15 @@ const Login = () => {
 
       switch (status) {
         case 0: {
-          setErrors({ password: 'Ошибка сети' });
+          setErrors({ password: t('loginPage.errors.network') });
           break;
         }
         case 401: {
-          setErrors({ password: 'Неверные имя пользователя или пароль' });
+          setErrors({ password: t('loginPage.errors.wrongData') });
           break;
         }
         default: {
-          setErrors({ password: 'Неизвестная ошибка' });
+          setErrors({ password: t('loginPage.errors.unknown') });
           break;
         }
       }
@@ -80,6 +80,7 @@ const Login = () => {
 
             <FormFloating className="mb-3">
               <FormControl
+                type="text"
                 name="username"
                 id="username"
                 value={values.username}
@@ -93,6 +94,7 @@ const Login = () => {
 
             <FormFloating className="mb-3">
               <FormControl
+                type="password"
                 name="password"
                 id="password"
                 value={values.password}
@@ -101,7 +103,7 @@ const Login = () => {
                 isInvalid={!!errors.password}
               />
               <FormLabel htmlFor="password">{t('loginPage.form.password')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{t('loginPage.errors.wrongData')}</FormGroup>
+              <FormGroup className="invalid-tooltip">{errors.password}</FormGroup>
             </FormFloating>
 
             <Button type="submit" variant="outline-primary" className="w-100" disabled={isSubmitting}>
