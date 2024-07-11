@@ -10,6 +10,7 @@ import PrivateRoute from './containers/Routes/PrivateRoute.jsx';
 import Home from './pages/Home.jsx';
 import SignUp from './pages/SignUp.jsx';
 import NavBar from './components/NavBar.jsx';
+import appRoutes from './containers/Routes/routesPath.js';
 
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
@@ -25,10 +26,17 @@ const App = () => (
         <AppContainer>
           <NavBar />
           <Routes>
-            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path={appRoutes.chatPagePath()}
+              element={(
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              )}
+            />
+            <Route path={appRoutes.loginPagePath()} element={<Login />} />
+            <Route path={appRoutes.signupPagePath()} element={<SignUp />} />
+            <Route path={appRoutes.notFoundPagePath()} element={<NotFound />} />
           </Routes>
         </AppContainer>
       </BrowserRouter>

@@ -14,12 +14,12 @@ import SocketProvider from './context/socket/SocketProvider.jsx';
 const userLanguage = localStorage.getItem('userLanguage');
 const DEFAULT_LANGUAGE = userLanguage ?? 'ru';
 
-const Init = () => {
+const Init = async () => {
   const socket = io();
 
   const i18n = i18next.createInstance();
 
-  i18n
+  await i18n
     .use(initReactI18next)
     .init({
       resources,
