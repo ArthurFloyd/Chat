@@ -2,12 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import { changeChannel } from '../../store/slices/app.js';
 import { useRemoveChannelMutation, useGetChannelsQuery } from '../../api/homeChannelsApi.js';
 
 const RemoveChannel = ({ handleCloseModal }) => {
   const { currentChannelId, editChannelId } = useSelector((state) => state.app);
   const { t } = useTranslation();
+  const rollbar = useRollbar();
 
   const [removeChannel] = useRemoveChannelMutation();
   const { status } = useGetChannelsQuery();
@@ -15,18 +17,23 @@ const RemoveChannel = ({ handleCloseModal }) => {
   const defaultChannel = { name: 'general', id: '1' };
 
   const handleRemoveChannel = async () => {
-    await removeChannel({ id: editChannelId });
+    try {
+      await removeChannel({ id: editChannelId });
 
-    if (currentChannelId === editChannelId) {
-      dispatch(changeChannel(defaultChannel));
+      if (currentChannelId === editChannelId) {
+        dispatch(changeChannel(defaultChannel));
+      }
+
+      toast.success(t('homePage.notifications.success.removeChannel'), {
+        position: 'top-right',
+        autoClose: 2000,
+      });
+
+      handleCloseModal();
+    } catch (error) {
+      rollbar.error('RemoveChannel', error);
+      toast.error(t('homePage.errors.noConnection'));
     }
-
-    toast.success(t('homePage.notifications.success.removeChannel'), {
-      position: 'top-right',
-      autoClose: 2000,
-    });
-
-    handleCloseModal();
   };
 
   return (

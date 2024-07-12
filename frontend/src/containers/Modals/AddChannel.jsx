@@ -8,12 +8,14 @@ import {
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import { useAddChannelMutation } from '../../api/homeChannelsApi.js';
 import { changeChannel } from '../../store/slices/app.js';
 
 const AddChannel = ({ handleCloseModal }) => {
   const { channelNames } = useSelector((state) => state.app);
   const { t } = useTranslation();
+  const rollbar = useRollbar();
 
   const channelSchema = Yup.object().shape({
     name: Yup.string()
@@ -33,17 +35,22 @@ const AddChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleAddNewChannel = async (channelName) => {
-    const filteredChannelName = filter.clean(channelName);
-    const newChannel = { name: filteredChannelName };
-    const { data: { name, id } } = await addChannel(newChannel);
+    try {
+      const filteredChannelName = filter.clean(channelName);
+      const newChannel = { name: filteredChannelName };
+      const { data: { name, id } } = await addChannel(newChannel);
 
-    toast.success(t('homePage.notifications.success.addChannel'), {
-      position: 'top-right',
-      autoClose: 2000,
-    });
+      toast.success(t('homePage.notifications.success.addChannel'), {
+        position: 'top-right',
+        autoClose: 2000,
+      });
 
-    handleCloseModal();
-    dispatch(changeChannel({ name, id }));
+      handleCloseModal();
+      dispatch(changeChannel({ name, id }));
+    } catch (error) {
+      rollbar.error('AddChannel', error);
+      toast.error(t('homePage.errors.noConnection'));
+    }
   };
 
   return (

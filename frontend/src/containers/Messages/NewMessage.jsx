@@ -4,6 +4,8 @@ import { useRef, useEffect } from 'react';
 import { FormGroup, FormControl } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
+import { toast } from 'react-toastify';
+import { useRollbar } from '@rollbar/react';
 import { useAddMessageMutation } from '../../api/homeMessagesApi.js';
 
 const NewMessage = () => {
@@ -12,16 +14,22 @@ const NewMessage = () => {
   const { username } = useSelector((state) => state.auth);
   const { t } = useTranslation();
   const inputRef = useRef();
+  const rollbar = useRollbar();
 
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId, data]);
 
   const handleAddMessage = async (body, resetForm) => {
-    const filteredMessage = filter.clean(body);
+    try {
+      const filteredMessage = filter.clean(body);
 
-    await addMessage({ body: filteredMessage, channelId: currentChannelId, username });
-    resetForm();
+      await addMessage({ body: filteredMessage, channelId: currentChannelId, username });
+      resetForm();
+    } catch (error) {
+      rollbar.error('NewMessage', error);
+      toast.error(t('homePage.errors.noConnection'));
+    }
   };
 
   return (

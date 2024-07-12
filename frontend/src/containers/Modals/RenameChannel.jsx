@@ -8,10 +8,12 @@ import {
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import { useEditChannelMutation } from '../../api/homeChannelsApi.js';
 
 const RenameChannel = ({ handleCloseModal }) => {
   const { channelNames, editChannelId, editChannelName } = useSelector((state) => state.app);
+  const rollbar = useRollbar();
 
   const { t } = useTranslation();
 
@@ -33,14 +35,21 @@ const RenameChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleRenameChannel = async (channelName) => {
-    const filteredChannelName = filter.clean(channelName);
-    const newChannel = { id: editChannelId, name: filteredChannelName };
-    await editChannel(newChannel);
-    toast.success(t('homePage.notifications.success.renameChannel'), {
-      position: 'top-right',
-      autoClose: 2000,
-    });
-    handleCloseModal();
+    try {
+      const filteredChannelName = filter.clean(channelName);
+      const newChannel = { id: editChannelId, name: filteredChannelName };
+      await editChannel(newChannel);
+
+      toast.success(t('homePage.notifications.success.renameChannel'), {
+        position: 'top-right',
+        autoClose: 2000,
+      });
+
+      handleCloseModal();
+    } catch (error) {
+      rollbar.error('RenameChannel', error);
+      toast.error(t('homePage.errors.noConnection'));
+    }
   };
 
   return (

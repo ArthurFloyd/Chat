@@ -36,6 +36,9 @@ const enLocales = {
         message_few: '{{count}} messages',
         message_many: '{{count}} messages',
       },
+      errors: {
+        noConnection: 'No connection to the server',
+      },
       modals: {
         addNewChannelHeader: 'Add a channel',
         newChannelName: 'Channel name',

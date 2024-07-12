@@ -36,6 +36,9 @@ const ruLocales = {
         message_few: '{{count}} сообщения',
         message_many: '{{count}} сообщений',
       },
+      errors: {
+        noConnection: 'Отсутствует соединение с сервером',
+      },
       modals: {
         addNewChannelHeader: 'Добавить канал',
         newChannelName: 'Имя канала',
