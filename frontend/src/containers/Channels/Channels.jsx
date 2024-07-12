@@ -9,7 +9,7 @@ const Channels = ({ channels }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const getChannelNames = (fethchChannels) => fethchChannels?.map(({ name }) => name) ?? [];
+  const getChannelNames = (fetchedChannels) => fetchedChannels?.map(({ name }) => name) ?? [];
 
   useEffect(() => {
     if (channels) {

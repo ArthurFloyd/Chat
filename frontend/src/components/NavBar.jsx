@@ -38,8 +38,6 @@ const NavBar = () => {
 
   const { isAuthed, logOut } = useAuthContext();
 
-  const handleExit = () => logOut();
-
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
@@ -50,7 +48,7 @@ const NavBar = () => {
           <LanguageSelector />
         </Nav>
         {isAuthed && (
-          <button type="button" className="btn btn-primary" onClick={handleExit}>
+          <button type="button" className="btn btn-primary" onClick={() => logOut()}>
             {t('homePage.logOutButton')}
           </button>
         )}

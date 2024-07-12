@@ -12,12 +12,13 @@ const RemoveChannel = ({ handleCloseModal }) => {
   const [removeChannel] = useRemoveChannelMutation();
   const { status } = useGetChannelsQuery();
   const dispatch = useDispatch();
+  const defaultChannel = { name: 'general', id: '1' };
 
   const handleRemoveChannel = async () => {
     await removeChannel({ id: editChannelId });
 
     if (currentChannelId === editChannelId) {
-      dispatch(changeChannel({ name: 'general', id: '1' }));
+      dispatch(changeChannel(defaultChannel));
     }
 
     toast.success(t('homePage.notifications.success.removeChannel'), {

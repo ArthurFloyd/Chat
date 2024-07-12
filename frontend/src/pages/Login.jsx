@@ -12,6 +12,7 @@ import { useLoginMutation } from '../api/authenticateApi.js';
 import useLocalStorage from '../hooks/useLocalStorage.js';
 import { setUserData } from '../store/slices/auth.js';
 import avatar from '../assets/login.jpg';
+import appRoutes from '../containers/Routes/routesPath.js';
 
 const Login = () => {
   const { setAuth } = useAuthContext();
@@ -40,7 +41,7 @@ const Login = () => {
       setSubmitting(false);
       setAuth(true);
 
-      navigate('/');
+      navigate(appRoutes.chatPagePath());
     } catch (error) {
       setSubmitting(false);
       const { status } = error;

@@ -13,6 +13,8 @@ import getModal from '../containers/Modals/index.js';
 import SocketContext from '../context/socket/SocketContext.js';
 import 'react-toastify/dist/ReactToastify.css';
 
+const defaultChannel = { name: 'general', id: '1' };
+
 const renderModal = ({ isModalOpened, modalType, handleCloseModal }) => {
   if (!isModalOpened) {
     return null;
@@ -62,7 +64,7 @@ const Home = () => {
       draftChannels = draftChannels.filter((curChannels) => curChannels.id !== id);
 
       if (currentChannelId === id) {
-        dispatch(changeChannel({ name: 'general', id: '1' }));
+        dispatch(changeChannel(defaultChannel));
       }
 
       return draftChannels;
