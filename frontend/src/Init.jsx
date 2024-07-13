@@ -14,7 +14,7 @@ import SocketProvider from './context/socket/SocketProvider.jsx';
 const userLanguage = localStorage.getItem('userLanguage');
 const DEFAULT_LANGUAGE = userLanguage ?? 'ru';
 
-const Init = async () => {
+const init = async () => {
   const socket = io();
 
   const i18n = i18next.createInstance();
@@ -51,4 +51,4 @@ const Init = async () => {
   );
 };
 
-export default Init;
+export default init;
