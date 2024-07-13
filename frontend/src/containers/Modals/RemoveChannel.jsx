@@ -12,19 +12,22 @@ const RemoveChannel = ({ handleCloseModal }) => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
 
-  const [removeChannel, { error }] = useRemoveChannelMutation();
+  const [removeChannel] = useRemoveChannelMutation();
   const [removeMessage] = useRemoveMessageMutation();
   const { status } = useGetChannelsQuery();
   const dispatch = useDispatch();
   const defaultChannel = { name: 'general', id: '1' };
 
   const handleRemoveChannel = async () => {
-    if (error) {
-      rollbar.error('RemoveChannel', error);
+    const channelRemovalResult = await removeChannel({ id: editChannelId });
+    const messagesRemovalResult = await removeMessage(editChannelId);
+    const removalError = channelRemovalResult?.error || messagesRemovalResult?.error;
+    if (removalError) {
+      rollbar.error('RemoveChannel', removalError);
       toast.error(t('homePage.errors.noConnection'));
+
+      return;
     }
-    await removeChannel({ id: editChannelId });
-    await removeMessage(editChannelId);
 
     if (currentChannelId === editChannelId) {
       dispatch(changeChannel(defaultChannel));

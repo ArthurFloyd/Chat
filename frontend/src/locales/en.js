@@ -38,6 +38,8 @@ const enLocales = {
       },
       errors: {
         noConnection: 'No connection to the server',
+        unknown: 'An unexpected error occurred',
+        notAuthed: 'Sign in',
       },
       modals: {
         addNewChannelHeader: 'Add a channel',

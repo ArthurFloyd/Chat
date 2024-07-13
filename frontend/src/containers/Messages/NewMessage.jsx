@@ -4,12 +4,15 @@ import { useRef, useEffect } from 'react';
 import { FormGroup, FormControl } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { useAddMessageMutation } from '../../api/homeMessagesApi.js';
+import handleError from '../../utils/handleError.js';
+import useAuthContext from '../../hooks/useAuthContext.js';
 
 const NewMessage = () => {
-  const [addMessage, { data, error }] = useAddMessageMutation();
+  const { logOut } = useAuthContext();
+  const [addMessage, { data }] = useAddMessageMutation();
   const { currentChannelId } = useSelector((state) => state.app);
   const { username } = useSelector((state) => state.auth);
   const { t } = useTranslation();
@@ -21,15 +24,20 @@ const NewMessage = () => {
   }, [currentChannelId, data]);
 
   const handleAddMessage = async (body, resetForm) => {
-    if (error) {
-      toast.error(t('homePage.errors.noConnection'));
-      rollbar.error('NewMessage', error);
-    }
-
     const filteredMessage = filter.clean(body);
-
-    await addMessage({ body: filteredMessage, channelId: currentChannelId, username });
+    const messageAdditionResult = await addMessage({
+      body: filteredMessage,
+      channelId: currentChannelId,
+      username,
+    });
+    // console.log(messageAdditionResult.error);
     resetForm();
+    if (messageAdditionResult?.error.status) {
+      handleError(messageAdditionResult.error, 'New Message', logOut, t, rollbar);
+      // console.log('errorMessage', errorMessage);
+      // toast.error(t(`homePage.errors.${errorMessage}`));
+      // useRollbar.error(filePath, error);
+    }
   };
 
   return (

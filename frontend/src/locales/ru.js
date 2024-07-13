@@ -38,6 +38,8 @@ const ruLocales = {
       },
       errors: {
         noConnection: 'Отсутствует соединение с сервером',
+        unknown: 'Неизвестная ошибка',
+        notAuthed: 'Войдите',
       },
       modals: {
         addNewChannelHeader: 'Добавить канал',
