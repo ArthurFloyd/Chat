@@ -39,6 +39,8 @@ const Home = () => {
 
   const { data: channels } = useGetChannelsQuery();
   const { data: messages } = useGetMessagesQuery();
+  console.log('c', channels);
+  console.log('m', messages);
 
   useEffect(() => {
     const handleNewMessage = (newMessage) => dispatch(homeMessagessApi.util.updateQueryData('getMessages', undefined, (draftMessages) => {

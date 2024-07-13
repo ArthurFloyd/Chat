@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { changeChannel } from '../../store/slices/app.js';
 import { useRemoveChannelMutation, useGetChannelsQuery } from '../../api/homeChannelsApi.js';
+import { useRemoveMessageMutation } from '../../api/homeMessagesApi.js';
 
 const RemoveChannel = ({ handleCloseModal }) => {
   const { currentChannelId, editChannelId } = useSelector((state) => state.app);
@@ -12,6 +13,7 @@ const RemoveChannel = ({ handleCloseModal }) => {
   const rollbar = useRollbar();
 
   const [removeChannel, { error }] = useRemoveChannelMutation();
+  const [removeMessage] = useRemoveMessageMutation();
   const { status } = useGetChannelsQuery();
   const dispatch = useDispatch();
   const defaultChannel = { name: 'general', id: '1' };
@@ -22,6 +24,7 @@ const RemoveChannel = ({ handleCloseModal }) => {
       toast.error(t('homePage.errors.noConnection'));
     }
     await removeChannel({ id: editChannelId });
+    await removeMessage(editChannelId);
 
     if (currentChannelId === editChannelId) {
       dispatch(changeChannel(defaultChannel));
