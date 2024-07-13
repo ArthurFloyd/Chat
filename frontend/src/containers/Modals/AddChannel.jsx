@@ -26,7 +26,7 @@ const AddChannel = ({ handleCloseModal }) => {
       .notOneOf(channelNames, t('homePage.modals.errors.uniqueName')),
   });
 
-  const [addChannel] = useAddChannelMutation();
+  const [addChannel, { error }] = useAddChannelMutation();
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -35,22 +35,21 @@ const AddChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleAddNewChannel = async (channelName) => {
-    try {
-      const filteredChannelName = filter.clean(channelName);
-      const newChannel = { name: filteredChannelName };
-      const { data: { name, id } } = await addChannel(newChannel);
-
-      toast.success(t('homePage.notifications.success.addChannel'), {
-        position: 'top-right',
-        autoClose: 2000,
-      });
-
-      handleCloseModal();
-      dispatch(changeChannel({ name, id }));
-    } catch (error) {
+    if (error) {
       rollbar.error('AddChannel', error);
       toast.error(t('homePage.errors.noConnection'));
     }
+    const filteredChannelName = filter.clean(channelName);
+    const newChannel = { name: filteredChannelName };
+    const { data: { name, id } } = await addChannel(newChannel);
+
+    toast.success(t('homePage.notifications.success.addChannel'), {
+      position: 'top-right',
+      autoClose: 2000,
+    });
+
+    handleCloseModal();
+    dispatch(changeChannel({ name, id }));
   };
 
   return (

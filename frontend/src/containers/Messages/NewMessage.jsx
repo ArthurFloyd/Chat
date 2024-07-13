@@ -9,7 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import { useAddMessageMutation } from '../../api/homeMessagesApi.js';
 
 const NewMessage = () => {
-  const [addMessage, { data }] = useAddMessageMutation();
+  const [addMessage, { data, error }] = useAddMessageMutation();
   const { currentChannelId } = useSelector((state) => state.app);
   const { username } = useSelector((state) => state.auth);
   const { t } = useTranslation();
@@ -21,15 +21,15 @@ const NewMessage = () => {
   }, [currentChannelId, data]);
 
   const handleAddMessage = async (body, resetForm) => {
-    try {
-      const filteredMessage = filter.clean(body);
-
-      await addMessage({ body: filteredMessage, channelId: currentChannelId, username });
-      resetForm();
-    } catch (error) {
-      rollbar.error('NewMessage', error);
+    if (error) {
       toast.error(t('homePage.errors.noConnection'));
+      rollbar.error('NewMessage', error);
     }
+
+    const filteredMessage = filter.clean(body);
+
+    await addMessage({ body: filteredMessage, channelId: currentChannelId, username });
+    resetForm();
   };
 
   return (

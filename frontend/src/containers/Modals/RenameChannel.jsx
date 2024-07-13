@@ -26,7 +26,7 @@ const RenameChannel = ({ handleCloseModal }) => {
       .notOneOf(channelNames, t('homePage.modals.errors.uniqueName')),
   });
 
-  const [editChannel] = useEditChannelMutation();
+  const [editChannel, { error }] = useEditChannelMutation();
   const inputRef = useRef();
 
   useEffect(() => {
@@ -35,21 +35,21 @@ const RenameChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleRenameChannel = async (channelName) => {
-    try {
-      const filteredChannelName = filter.clean(channelName);
-      const newChannel = { id: editChannelId, name: filteredChannelName };
-      await editChannel(newChannel);
-
-      toast.success(t('homePage.notifications.success.renameChannel'), {
-        position: 'top-right',
-        autoClose: 2000,
-      });
-
-      handleCloseModal();
-    } catch (error) {
+    if (error) {
       rollbar.error('RenameChannel', error);
       toast.error(t('homePage.errors.noConnection'));
     }
+
+    const filteredChannelName = filter.clean(channelName);
+    const newChannel = { id: editChannelId, name: filteredChannelName };
+    await editChannel(newChannel);
+
+    toast.success(t('homePage.notifications.success.renameChannel'), {
+      position: 'top-right',
+      autoClose: 2000,
+    });
+
+    handleCloseModal();
   };
 
   return (
