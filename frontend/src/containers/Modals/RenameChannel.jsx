@@ -6,7 +6,6 @@ import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
 import filter from 'leo-profanity';
-// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 
@@ -40,11 +39,6 @@ const RenameChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleRenameChannel = async (channelName) => {
-    // if (error) {
-    //   rollbar.error('RenameChannel', error);
-    //   toast.error(t('homePage.errors.noConnection'));
-    // }
-
     const filteredChannelName = filter.clean(channelName);
     const newChannel = { id: editChannelId, name: filteredChannelName };
     const channelRenameResult = await editChannel(newChannel);
@@ -52,19 +46,12 @@ const RenameChannel = ({ handleCloseModal }) => {
     handleCloseModal();
 
     if (channelRenameResult?.error) {
-      // console.log('error', cahnnelAdditionResult);
-
       handleError(channelRenameResult.error, 'Rename Channel', logOut, t, rollbar);
 
       return;
     }
 
     showSuccess('renameChannel', t);
-
-    // toast.success(t('homePage.notifications.success.renameChannel'), {
-    //   position: 'top-right',
-    //   autoClose: 2000,
-    // });
   };
 
   return (

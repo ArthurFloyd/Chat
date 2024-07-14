@@ -6,7 +6,6 @@ import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
 import filter from 'leo-profanity';
-// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 
@@ -40,28 +39,18 @@ const AddChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleAddNewChannel = async (channelName) => {
-    // if (error) {
-    //   rollbar.error('AddChannel', error);
-    //   toast.error(t('homePage.errors.noConnection'));
-    // }
     const filteredChannelName = filter.clean(channelName);
     const newChannel = { name: filteredChannelName };
     const channelAdditionResult = await addChannel(newChannel);
-    // console.log(cahnnelAdditionResult);
     handleCloseModal();
-    // console.log('2', cahnnelAdditionResult);
 
     if (channelAdditionResult?.error) {
-      // console.log('error', cahnnelAdditionResult);
-
       handleError(channelAdditionResult.error, 'Add Channel', logOut, t, rollbar);
 
       return;
     }
 
-    // console.log('chanel1', cahnnelAdditionResult);
     const { data: { name, id } } = channelAdditionResult;
-    // console.log('chanel2', cahnnelAdditionResult);
     dispatch(changeChannel({ name, id }));
 
     showSuccess('addChannel', t);

@@ -4,7 +4,6 @@ import { useRef, useEffect } from 'react';
 import { FormGroup, FormControl } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-// import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { useAddMessageMutation } from '../../api/homeMessagesApi.js';
 import handleError from '../../utils/handleError.js';
@@ -30,13 +29,9 @@ const NewMessage = () => {
       channelId: currentChannelId,
       username,
     });
-    // console.log(messageAdditionResult.error);
     resetForm();
     if (messageAdditionResult?.error.status) {
       handleError(messageAdditionResult.error, 'New Message', logOut, t, rollbar);
-      // console.log('errorMessage', errorMessage);
-      // toast.error(t(`homePage.errors.${errorMessage}`));
-      // useRollbar.error(filePath, error);
     }
   };
 

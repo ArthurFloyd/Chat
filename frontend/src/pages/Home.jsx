@@ -12,7 +12,6 @@ import NewMessage from '../containers/Messages/NewMessage.jsx';
 import getModal from '../containers/Modals/index.js';
 import SocketContext from '../context/socket/SocketContext.js';
 import 'react-toastify/dist/ReactToastify.css';
-// import useAuthContext from '../hooks/useAuthContext.js';
 
 const defaultChannel = { name: 'general', id: '1' };
 
@@ -28,8 +27,6 @@ const renderModal = ({ isModalOpened, modalType, handleCloseModal }) => {
 const Home = () => {
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
-  // const { logOut } = useAuthContext();
-  // const { isAuthed } = useAuthContext();
 
   const handleCloseModal = () => {
     dispatch(changeModalState({ isModalOpened: false, modalType: null, editChannelId: null }));
@@ -42,11 +39,6 @@ const Home = () => {
 
   const { data: channels } = useGetChannelsQuery();
   const { data: messages } = useGetMessagesQuery();
-
-  // if (!isAuthed) {
-  //   // logOut();
-  //   // isAuthed()
-  // }
 
   useEffect(() => {
     const handleNewMessage = (newMessage) => dispatch(homeMessagessApi.util.updateQueryData('getMessages', undefined, (draftMessages) => {

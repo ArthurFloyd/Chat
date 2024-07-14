@@ -21,7 +21,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const setLocalStorageItem = useLocalStorage('set');
+  const loginLocalStorageItems = useLocalStorage('login');
 
   const navigate = useNavigate();
 
@@ -34,8 +34,7 @@ const Login = () => {
     try {
       const { token, username } = await login({ ...values }).unwrap();
 
-      setLocalStorageItem('token', token);
-      setLocalStorageItem('username', username);
+      loginLocalStorageItems(token, username);
       dispatch(setUserData({ token, username }));
 
       setSubmitting(false);

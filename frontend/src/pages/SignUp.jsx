@@ -20,7 +20,8 @@ const SignUp = () => {
   const { setAuth } = useAuthContext();
   const [signUp] = useSignUpMutation();
   const dispatch = useDispatch();
-  const setLocalStorageItem = useLocalStorage('set');
+  const loginLocalStorageItems = useLocalStorage('login');
+
   const signupSchema = Yup.object().shape({
     username: Yup.string()
       .min(3, t('signupPage.errors.shortUserName'))
@@ -32,8 +33,8 @@ const SignUp = () => {
   const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const { token, username } = await signUp({ ...values }).unwrap();
-      setLocalStorageItem('token', token);
-      setLocalStorageItem('username', username);
+
+      loginLocalStorageItems(token, username);
       dispatch(setUserData({ token, username }));
       setSubmitting(false);
       setAuth(true);

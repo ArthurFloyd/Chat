@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
-// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { changeChannel } from '../../store/slices/app.js';
@@ -25,17 +24,9 @@ const RemoveChannel = ({ handleCloseModal }) => {
   const handleRemoveChannel = async () => {
     const channelRemovalResult = await removeChannel({ id: editChannelId });
     const messagesRemovalResult = await removeMessage(editChannelId);
-    // const removalError = channelRemovalResult?.error || messagesRemovalResult?.error;
-    // if (removalError) {
-    //   rollbar.error('RemoveChannel', removalError);
-    //   toast.error(t('homePage.errors.noConnection'));
 
-    //   return;
-    // }
     handleCloseModal();
     if (channelRemovalResult?.error || messagesRemovalResult?.error) {
-      // console.log('error', cahnnelAdditionResult);
-
       handleError(channelRemovalResult.error, 'Remove Channel', logOut, t, rollbar);
 
       return;
