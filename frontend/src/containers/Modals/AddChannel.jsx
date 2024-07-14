@@ -9,13 +9,17 @@ import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
+
 import { useAddChannelMutation } from '../../api/homeChannelsApi.js';
 import { changeChannel } from '../../store/slices/app.js';
+import useAuthContext from '../../hooks/useAuthContext.js';
+import handleError from '../../utils/handleError.js';
 
 const AddChannel = ({ handleCloseModal }) => {
   const { channelNames } = useSelector((state) => state.app);
   const { t } = useTranslation();
   const rollbar = useRollbar();
+  const { logOut } = useAuthContext();
 
   const channelSchema = Yup.object().shape({
     name: Yup.string()
@@ -26,7 +30,7 @@ const AddChannel = ({ handleCloseModal }) => {
       .notOneOf(channelNames, t('homePage.modals.errors.uniqueName')),
   });
 
-  const [addChannel, { error }] = useAddChannelMutation();
+  const [addChannel] = useAddChannelMutation();
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -35,21 +39,34 @@ const AddChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleAddNewChannel = async (channelName) => {
-    if (error) {
-      rollbar.error('AddChannel', error);
-      toast.error(t('homePage.errors.noConnection'));
-    }
+    // if (error) {
+    //   rollbar.error('AddChannel', error);
+    //   toast.error(t('homePage.errors.noConnection'));
+    // }
     const filteredChannelName = filter.clean(channelName);
     const newChannel = { name: filteredChannelName };
-    const { data: { name, id } } = await addChannel(newChannel);
+    const channelAdditionResult = await addChannel(newChannel);
+    // console.log(cahnnelAdditionResult);
+    handleCloseModal();
+    // console.log('2', cahnnelAdditionResult);
+
+    if (channelAdditionResult?.error) {
+      // console.log('error', cahnnelAdditionResult);
+
+      handleError(channelAdditionResult.error, 'Add Channel', logOut, t, rollbar);
+
+      return;
+    }
+
+    // console.log('chanel1', cahnnelAdditionResult);
+    const { data: { name, id } } = channelAdditionResult;
+    // console.log('chanel2', cahnnelAdditionResult);
+    dispatch(changeChannel({ name, id }));
 
     toast.success(t('homePage.notifications.success.addChannel'), {
       position: 'top-right',
       autoClose: 2000,
     });
-
-    handleCloseModal();
-    dispatch(changeChannel({ name, id }));
   };
 
   return (

@@ -10,10 +10,13 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { useEditChannelMutation } from '../../api/homeChannelsApi.js';
+import handleError from '../../utils/handleError.js';
+import useAuthContext from '../../hooks/useAuthContext.js';
 
 const RenameChannel = ({ handleCloseModal }) => {
   const { channelNames, editChannelId, editChannelName } = useSelector((state) => state.app);
   const rollbar = useRollbar();
+  const { logOut } = useAuthContext();
 
   const { t } = useTranslation();
 
@@ -26,7 +29,7 @@ const RenameChannel = ({ handleCloseModal }) => {
       .notOneOf(channelNames, t('homePage.modals.errors.uniqueName')),
   });
 
-  const [editChannel, { error }] = useEditChannelMutation();
+  const [editChannel] = useEditChannelMutation();
   const inputRef = useRef();
 
   useEffect(() => {
@@ -35,21 +38,28 @@ const RenameChannel = ({ handleCloseModal }) => {
   }, []);
 
   const handleRenameChannel = async (channelName) => {
-    if (error) {
-      rollbar.error('RenameChannel', error);
-      toast.error(t('homePage.errors.noConnection'));
-    }
+    // if (error) {
+    //   rollbar.error('RenameChannel', error);
+    //   toast.error(t('homePage.errors.noConnection'));
+    // }
 
     const filteredChannelName = filter.clean(channelName);
     const newChannel = { id: editChannelId, name: filteredChannelName };
-    await editChannel(newChannel);
+    const channelRenameResult = await editChannel(newChannel);
 
+    handleCloseModal();
+
+    if (channelRenameResult?.error) {
+      // console.log('error', cahnnelAdditionResult);
+
+      handleError(channelRenameResult.error, 'Rename Channel', logOut, t, rollbar);
+
+      return;
+    }
     toast.success(t('homePage.notifications.success.renameChannel'), {
       position: 'top-right',
       autoClose: 2000,
     });
-
-    handleCloseModal();
   };
 
   return (

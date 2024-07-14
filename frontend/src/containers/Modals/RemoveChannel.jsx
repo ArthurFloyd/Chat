@@ -6,11 +6,14 @@ import { useRollbar } from '@rollbar/react';
 import { changeChannel } from '../../store/slices/app.js';
 import { useRemoveChannelMutation, useGetChannelsQuery } from '../../api/homeChannelsApi.js';
 import { useRemoveMessageMutation } from '../../api/homeMessagesApi.js';
+import handleError from '../../utils/handleError.js';
+import useAuthContext from '../../hooks/useAuthContext.js';
 
 const RemoveChannel = ({ handleCloseModal }) => {
   const { currentChannelId, editChannelId } = useSelector((state) => state.app);
   const { t } = useTranslation();
   const rollbar = useRollbar();
+  const { logOut } = useAuthContext();
 
   const [removeChannel] = useRemoveChannelMutation();
   const [removeMessage] = useRemoveMessageMutation();
@@ -21,14 +24,21 @@ const RemoveChannel = ({ handleCloseModal }) => {
   const handleRemoveChannel = async () => {
     const channelRemovalResult = await removeChannel({ id: editChannelId });
     const messagesRemovalResult = await removeMessage(editChannelId);
-    const removalError = channelRemovalResult?.error || messagesRemovalResult?.error;
-    if (removalError) {
-      rollbar.error('RemoveChannel', removalError);
-      toast.error(t('homePage.errors.noConnection'));
+    // const removalError = channelRemovalResult?.error || messagesRemovalResult?.error;
+    // if (removalError) {
+    //   rollbar.error('RemoveChannel', removalError);
+    //   toast.error(t('homePage.errors.noConnection'));
+
+    //   return;
+    // }
+    handleCloseModal();
+    if (channelRemovalResult?.error || messagesRemovalResult?.error) {
+      // console.log('error', cahnnelAdditionResult);
+
+      handleError(channelRemovalResult.error, 'Remove Channel', logOut, t, rollbar);
 
       return;
     }
-
     if (currentChannelId === editChannelId) {
       dispatch(changeChannel(defaultChannel));
     }
@@ -37,8 +47,6 @@ const RemoveChannel = ({ handleCloseModal }) => {
       position: 'top-right',
       autoClose: 2000,
     });
-
-    handleCloseModal();
   };
 
   return (

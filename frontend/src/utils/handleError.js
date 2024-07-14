@@ -5,22 +5,22 @@ import { toast } from 'react-toastify';
 // const { t } = useTranslation();
 
 const handleError = (error, filePath, logOut, translate, rollbar) => {
-  console.log('start', filePath);
+  console.log('start', filePath, logOut);
 
   // let errorKey = t('homePage.errors.unknown');
   let errorKey = 'unknown';
   let callback = () => null;
-  // console.log(errorKey);
+  console.log(errorKey);
 
   switch (error.status) {
     case 'FETCH_ERROR': // do not remember
       errorKey = 'noConnection';
-      // console.log(errorKey);
+      console.log(errorKey);
 
       break;
     case 401: // need to check
       errorKey = 'notAuthed';
-      // console.log(errorKey);
+      console.log(errorKey);
       callback = logOut;
       break;
     default:
@@ -28,10 +28,14 @@ const handleError = (error, filePath, logOut, translate, rollbar) => {
   }
   // toast.error(errorKey);
   // useRollbar.error(filePath, error);
-  // console.log('finish');
+  // console.log('collback', callback);
+  console.log(0, translate);
   toast.error(translate(`homePage.errors.${errorKey}`));
-  rollbar(filePath, error);
+  console.log(1, rollbar);
+  rollbar.error(filePath, error);
+  console.log(2, callback);
   callback();
+  console.log('finish');
 };
 
 export default handleError;
