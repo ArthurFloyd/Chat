@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { changeChannel } from '../../store/slices/app.js';
@@ -8,6 +8,7 @@ import { useRemoveChannelMutation, useGetChannelsQuery } from '../../api/homeCha
 import { useRemoveMessageMutation } from '../../api/homeMessagesApi.js';
 import handleError from '../../utils/handleError.js';
 import useAuthContext from '../../hooks/useAuthContext.js';
+import showSuccess from '../../utils/showSuccess.js';
 
 const RemoveChannel = ({ handleCloseModal }) => {
   const { currentChannelId, editChannelId } = useSelector((state) => state.app);
@@ -43,10 +44,7 @@ const RemoveChannel = ({ handleCloseModal }) => {
       dispatch(changeChannel(defaultChannel));
     }
 
-    toast.success(t('homePage.notifications.success.removeChannel'), {
-      position: 'top-right',
-      autoClose: 2000,
-    });
+    showSuccess('removeChannel', t);
   };
 
   return (

@@ -6,12 +6,14 @@ import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
 import filter from 'leo-profanity';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
+
 import { useEditChannelMutation } from '../../api/homeChannelsApi.js';
 import handleError from '../../utils/handleError.js';
 import useAuthContext from '../../hooks/useAuthContext.js';
+import showSuccess from '../../utils/showSuccess.js';
 
 const RenameChannel = ({ handleCloseModal }) => {
   const { channelNames, editChannelId, editChannelName } = useSelector((state) => state.app);
@@ -56,10 +58,13 @@ const RenameChannel = ({ handleCloseModal }) => {
 
       return;
     }
-    toast.success(t('homePage.notifications.success.renameChannel'), {
-      position: 'top-right',
-      autoClose: 2000,
-    });
+
+    showSuccess('renameChannel', t);
+
+    // toast.success(t('homePage.notifications.success.renameChannel'), {
+    //   position: 'top-right',
+    //   autoClose: 2000,
+    // });
   };
 
   return (

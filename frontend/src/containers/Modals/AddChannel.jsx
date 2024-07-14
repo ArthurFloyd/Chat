@@ -6,7 +6,7 @@ import {
   Modal, FormGroup, FormControl, Button,
 } from 'react-bootstrap';
 import filter from 'leo-profanity';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 
@@ -14,6 +14,7 @@ import { useAddChannelMutation } from '../../api/homeChannelsApi.js';
 import { changeChannel } from '../../store/slices/app.js';
 import useAuthContext from '../../hooks/useAuthContext.js';
 import handleError from '../../utils/handleError.js';
+import showSuccess from '../../utils/showSuccess.js';
 
 const AddChannel = ({ handleCloseModal }) => {
   const { channelNames } = useSelector((state) => state.app);
@@ -63,10 +64,7 @@ const AddChannel = ({ handleCloseModal }) => {
     // console.log('chanel2', cahnnelAdditionResult);
     dispatch(changeChannel({ name, id }));
 
-    toast.success(t('homePage.notifications.success.addChannel'), {
-      position: 'top-right',
-      autoClose: 2000,
-    });
+    showSuccess('addChannel', t);
   };
 
   return (
