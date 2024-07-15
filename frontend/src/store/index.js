@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import { authenticateApi } from '../api/authenticateApi.js';
 import { homeChannelsApi } from '../api/homeChannelsApi.js';
 import { homeMessagessApi } from '../api/homeMessagesApi.js';

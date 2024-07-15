@@ -3,25 +3,19 @@ import * as yup from 'yup';
 import {
   FormGroup, FormControl, Button, FormFloating, FormLabel,
 } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
 import LoginComponent from '../components/LoginComponent.jsx';
 import useAuthContext from '../hooks/useAuthContext.js';
 import { useLoginMutation } from '../api/authenticateApi.js';
-import useLocalStorage from '../hooks/useLocalStorage.js';
-import { setUserData } from '../store/slices/auth.js';
 import avatar from '../assets/login.jpg';
 import { appRoutes } from '../containers/Routes/routesPath.js';
 
 const Login = () => {
-  const { setAuth } = useAuthContext();
+  const authContext = useAuthContext();
   const { t } = useTranslation();
   const [login] = useLoginMutation();
-
-  const dispatch = useDispatch();
-
-  const loginLocalStorageItems = useLocalStorage('login');
 
   const navigate = useNavigate();
 
@@ -32,14 +26,10 @@ const Login = () => {
 
   const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const { token, username } = await login({ ...values }).unwrap();
-
-      loginLocalStorageItems(token, username);
-      dispatch(setUserData({ token, username }));
+      const authData = await login({ ...values }).unwrap();
+      authContext.login(authData);
 
       setSubmitting(false);
-      setAuth(true);
-
       navigate(appRoutes.chatPagePath());
     } catch (error) {
       setSubmitting(false);

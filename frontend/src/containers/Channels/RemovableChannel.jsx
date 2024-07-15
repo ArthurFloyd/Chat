@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+
 import ChannelButton from './ChannelButton';
 import { changeModalState } from '../../store/slices/app.js';
 

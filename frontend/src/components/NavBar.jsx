@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  NavDropdown, Nav,
-} from 'react-bootstrap';
+import { NavDropdown, Nav } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 import useAuthContext from '../hooks/useAuthContext.js';

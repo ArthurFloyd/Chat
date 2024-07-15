@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom';
+
 import useAuthContext from '../../hooks/useAuthContext.js';
 import { appRoutes } from './routesPath.js';
 

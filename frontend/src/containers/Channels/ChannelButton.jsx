@@ -1,5 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { changeChannel } from '../../store/slices/app.js';
 
 const ChannelButton = ({ channel }) => {

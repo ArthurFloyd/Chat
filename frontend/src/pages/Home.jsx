@@ -11,7 +11,6 @@ import Channels from '../containers/Channels/Channels.jsx';
 import Messages from '../containers/Messages/Messages.jsx';
 import NewMessage from '../containers/Messages/NewMessage.jsx';
 import getModal from '../containers/Modals/index.js';
-// import SocketContext from '../context/socket/SocketContext.js';
 import 'react-toastify/dist/ReactToastify.css';
 import defaultChannel from '../utils/defaultChannel.js';
 import useSocket from '../hooks/useSocket.js';

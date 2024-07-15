@@ -1,15 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 import {
   FormGroup, FormControl, Button, FormFloating, FormLabel,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+
 import useAuthContext from '../hooks/useAuthContext';
 import { useSignUpMutation } from '../api/authenticateApi';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { setUserData } from '../store/slices/auth.js';
 import SignupComponent from '../components/SignupComponent';
 import signap from '../assets/signup.jpg';
 import { appRoutes } from '../containers/Routes/routesPath.js';
@@ -17,10 +15,8 @@ import { appRoutes } from '../containers/Routes/routesPath.js';
 const SignUp = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { setAuth } = useAuthContext();
   const [signUp] = useSignUpMutation();
-  const dispatch = useDispatch();
-  const loginLocalStorageItems = useLocalStorage('login');
+  const authContext = useAuthContext();
 
   const signupSchema = Yup.object().shape({
     username: Yup.string()
@@ -32,12 +28,10 @@ const SignUp = () => {
   });
   const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const { token, username } = await signUp({ ...values }).unwrap();
+      const authData = await signUp({ ...values }).unwrap();
+      authContext.login(authData);
 
-      loginLocalStorageItems(token, username);
-      dispatch(setUserData({ token, username }));
       setSubmitting(false);
-      setAuth(true);
       navigate(appRoutes.chatPagePath());
     } catch (error) {
       setSubmitting(false);

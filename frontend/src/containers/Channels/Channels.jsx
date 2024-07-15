@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+
 import { changeModalState, setChannels } from '../../store/slices/app.js';
 import RemovableChannel from './RemovableChannel.jsx';
 import NonRemovableChannel from '../../components/NonRemovableChannel.jsx';

@@ -1,24 +1,24 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 
-// import { changeChannel } from '../../store/slices/app.js';
+import { changeChannel } from '../../store/slices/app.js';
 import { useRemoveChannelMutation, useGetChannelsQuery } from '../../api/homeChannelsApi.js';
 import handleError from '../../utils/handleError.js';
 import useAuthContext from '../../hooks/useAuthContext.js';
 import showSuccess from '../../utils/showSuccess.js';
-// import defaultChannel from '../../utils/defaultChannel.js';
+import defaultChannel from '../../utils/defaultChannel.js';
 
 const RemoveChannel = ({ handleCloseModal }) => {
-  const { editChannelId } = useSelector((state) => state.app);
+  const { currentChannelId, editChannelId } = useSelector((state) => state.app);
   const { t } = useTranslation();
   const rollbar = useRollbar();
   const { logOut } = useAuthContext();
 
   const [removeChannel] = useRemoveChannelMutation();
   const { status } = useGetChannelsQuery();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleRemoveChannel = async () => {
     const channelRemovalResult = await removeChannel({ id: editChannelId });
@@ -35,9 +35,9 @@ const RemoveChannel = ({ handleCloseModal }) => {
 
       return;
     }
-    // if (currentChannelId === editChannelId) {
-    //   dispatch(changeChannel(defaultChannel));
-    // }
+    if (currentChannelId === editChannelId) {
+      dispatch(changeChannel(defaultChannel));
+    }
 
     showSuccess({
       successMessage: 'removeChannel',

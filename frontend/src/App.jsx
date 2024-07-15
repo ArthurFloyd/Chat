@@ -3,6 +3,7 @@ import { Provider, ErrorBoundary } from '@rollbar/react';
 import {
   BrowserRouter, Routes, Route,
 } from 'react-router-dom';
+
 import NotFound from './pages/NotFound.jsx';
 import Login from './pages/Login.jsx';
 import AppContainer from './components/AppContainer.jsx';
