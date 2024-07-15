@@ -46,12 +46,21 @@ const RenameChannel = ({ handleCloseModal }) => {
     handleCloseModal();
 
     if (channelRenameResult?.error) {
-      handleError(channelRenameResult.error, 'Rename Channel', logOut, t, rollbar);
+      handleError({
+        error: channelRenameResult.error,
+        filePath: 'Rename Channel',
+        translate: t,
+        logOut,
+        rollbar,
+      });
 
       return;
     }
 
-    showSuccess('renameChannel', t);
+    showSuccess({
+      successMessage: 'renameChannel',
+      translate: t,
+    });
   };
 
   return (

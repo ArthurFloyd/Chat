@@ -45,7 +45,13 @@ const AddChannel = ({ handleCloseModal }) => {
     handleCloseModal();
 
     if (channelAdditionResult?.error) {
-      handleError(channelAdditionResult.error, 'Add Channel', logOut, t, rollbar);
+      handleError({
+        error: channelAdditionResult.error,
+        filePath: 'Add Channel',
+        translate: t,
+        logOut,
+        rollbar,
+      });
 
       return;
     }
@@ -53,7 +59,10 @@ const AddChannel = ({ handleCloseModal }) => {
     const { data: { name, id } } = channelAdditionResult;
     dispatch(changeChannel({ name, id }));
 
-    showSuccess('addChannel', t);
+    showSuccess({
+      successMessage: 'addChannel',
+      translate: t,
+    });
   };
 
   return (

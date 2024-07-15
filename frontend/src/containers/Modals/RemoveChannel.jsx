@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { changeChannel } from '../../store/slices/app.js';
 import { useRemoveChannelMutation, useGetChannelsQuery } from '../../api/homeChannelsApi.js';
-import { useRemoveMessageMutation } from '../../api/homeMessagesApi.js';
 import handleError from '../../utils/handleError.js';
 import useAuthContext from '../../hooks/useAuthContext.js';
 import showSuccess from '../../utils/showSuccess.js';
@@ -16,18 +15,22 @@ const RemoveChannel = ({ handleCloseModal }) => {
   const { logOut } = useAuthContext();
 
   const [removeChannel] = useRemoveChannelMutation();
-  const [removeMessage] = useRemoveMessageMutation();
   const { status } = useGetChannelsQuery();
   const dispatch = useDispatch();
   const defaultChannel = { name: 'general', id: '1' };
 
   const handleRemoveChannel = async () => {
     const channelRemovalResult = await removeChannel({ id: editChannelId });
-    const messagesRemovalResult = await removeMessage(editChannelId);
 
     handleCloseModal();
-    if (channelRemovalResult?.error || messagesRemovalResult?.error) {
-      handleError(channelRemovalResult.error, 'Remove Channel', logOut, t, rollbar);
+    if (channelRemovalResult?.error) {
+      handleError({
+        error: channelRemovalResult.error,
+        filePath: 'Remove Channel',
+        translate: t,
+        logOut,
+        rollbar,
+      });
 
       return;
     }
@@ -35,7 +38,10 @@ const RemoveChannel = ({ handleCloseModal }) => {
       dispatch(changeChannel(defaultChannel));
     }
 
-    showSuccess('removeChannel', t);
+    showSuccess({
+      successMessage: 'removeChannel',
+      translate: t,
+    });
   };
 
   return (

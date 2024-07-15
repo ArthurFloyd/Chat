@@ -31,7 +31,13 @@ const NewMessage = () => {
     });
     resetForm();
     if (messageAdditionResult?.error.status) {
-      handleError(messageAdditionResult.error, 'New Message', logOut, t, rollbar);
+      handleError({
+        error: messageAdditionResult.error,
+        filePath: 'New Message',
+        translate: t,
+        logOut,
+        rollbar,
+      });
     }
   };
 

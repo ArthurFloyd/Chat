@@ -1,8 +1,9 @@
 import { toast } from 'react-toastify';
 
-const handleError = (error, filePath, logOut, translate, rollbar) => {
+const handleError = ({
+  error, filePath, translate, logOut, rollbar,
+}) => {
   let errorKey = 'unknown';
-  let callback = () => null;
 
   switch (error.status) {
     case 'FETCH_ERROR':
@@ -11,7 +12,7 @@ const handleError = (error, filePath, logOut, translate, rollbar) => {
       break;
     case 401:
       errorKey = 'notAuthed';
-      callback = logOut;
+      logOut();
       break;
     default:
       break;
@@ -19,7 +20,6 @@ const handleError = (error, filePath, logOut, translate, rollbar) => {
 
   toast.error(translate(`homePage.errors.${errorKey}`));
   rollbar.error(filePath, error);
-  callback();
 };
 
 export default handleError;
