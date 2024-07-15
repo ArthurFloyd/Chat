@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
 import notFound from '../assets/notFound.jpg';
+import { appRoutes } from '../containers/Routes/routesPath';
 
 const NotFound = () => {
   const { t } = useTranslation();
@@ -12,7 +14,7 @@ const NotFound = () => {
       <p className="text-muted">
         {t('notFoundPage.body')}
         {' '}
-        <Link to="/">{t('notFoundPage.link')}</Link>
+        <Link to={appRoutes.signupPagePath()}>{t('notFoundPage.link')}</Link>
       </p>
     </div>
   );

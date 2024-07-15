@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+import { appRoutes } from '../containers/Routes/routesPath';
+
 const LoginComponent = ({ children, avatar }) => {
   const { t } = useTranslation();
 
@@ -18,7 +20,7 @@ const LoginComponent = ({ children, avatar }) => {
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>{t('loginPage.form.footer')}</span>
-                <Link to="/signup">{t('loginPage.form.footerRegistrationLink')}</Link>
+                <Link to={appRoutes.signupPagePath()}>{t('loginPage.form.footerRegistrationLink')}</Link>
               </div>
             </div>
           </div>

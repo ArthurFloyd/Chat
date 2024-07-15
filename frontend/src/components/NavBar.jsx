@@ -4,7 +4,9 @@ import {
   NavDropdown, Nav,
 } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+
 import useAuthContext from '../hooks/useAuthContext.js';
+import { appRoutes } from '../containers/Routes/routesPath.js';
 
 const LanguageSelector = () => {
   const { t, i18n } = useTranslation();
@@ -41,7 +43,7 @@ const NavBar = () => {
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to={appRoutes.chatPagePath()}>
           Hexlet Chat
         </Link>
         <Nav className="me-auto">
