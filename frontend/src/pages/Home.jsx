@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+
 import { homeChannelsApi, useGetChannelsQuery } from '../api/homeChannelsApi.js';
 import { homeMessagessApi, useGetMessagesQuery } from '../api/homeMessagesApi.js';
 import { changeChannel, changeModalState } from '../store/slices/app.js';
@@ -10,10 +11,10 @@ import Channels from '../containers/Channels/Channels.jsx';
 import Messages from '../containers/Messages/Messages.jsx';
 import NewMessage from '../containers/Messages/NewMessage.jsx';
 import getModal from '../containers/Modals/index.js';
-import SocketContext from '../context/socket/SocketContext.js';
+// import SocketContext from '../context/socket/SocketContext.js';
 import 'react-toastify/dist/ReactToastify.css';
-
-const defaultChannel = { name: 'general', id: '1' };
+import defaultChannel from '../utils/defaultChannel.js';
+import useSocket from '../hooks/useSocket.js';
 
 const renderModal = ({ isModalOpened, modalType, handleCloseModal }) => {
   if (!isModalOpened) {
@@ -26,7 +27,7 @@ const renderModal = ({ isModalOpened, modalType, handleCloseModal }) => {
 
 const Home = () => {
   const dispatch = useDispatch();
-  const socket = useContext(SocketContext);
+  const socket = useSocket();
 
   const handleCloseModal = () => {
     dispatch(changeModalState({ isModalOpened: false, modalType: null, editChannelId: null }));
@@ -62,6 +63,7 @@ const Home = () => {
 
     const handleRemoveChannel = ({ id }) => dispatch(homeChannelsApi.util.updateQueryData('getChannels', undefined, (draftChannels) => {
       draftChannels = draftChannels.filter((curChannels) => curChannels.id !== id);
+      // .filter()
 
       if (currentChannelId === id) {
         dispatch(changeChannel(defaultChannel));
