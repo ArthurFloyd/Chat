@@ -41,6 +41,8 @@ const Home = () => {
   const { data: channels } = useGetChannelsQuery();
   const { data: messages } = useGetMessagesQuery();
 
+  console.log(messages);
+
   useEffect(() => {
     const handleNewMessage = (newMessage) => dispatch(homeMessagessApi.util.updateQueryData('getMessages', undefined, (draftMessages) => {
       draftMessages.push(newMessage);
@@ -61,16 +63,26 @@ const Home = () => {
       return draftChannels;
     }));
 
-    const handleRemoveChannel = ({ id }) => dispatch(homeChannelsApi.util.updateQueryData('getChannels', undefined, (draftChannels) => {
-      draftChannels = draftChannels.filter((curChannels) => curChannels.id !== id);
-      // .filter()
+    const handleRemoveChannel = ({ id }) => {
+      const removeChannelAction = homeChannelsApi.util.updateQueryData('getChannels', undefined, (draftChannels) => {
+        draftChannels = draftChannels.filter((curChannels) => curChannels.id !== id);
 
-      if (currentChannelId === id) {
-        dispatch(changeChannel(defaultChannel));
-      }
+        if (currentChannelId === id) {
+          dispatch(changeChannel(defaultChannel));
+        }
 
-      return draftChannels;
-    }));
+        return draftChannels;
+      });
+
+      const removeMessagesAction = homeMessagessApi.util.updateQueryData(
+        'getMessages',
+        undefined,
+        (draftMessages) => draftMessages.filter(({ channelId }) => channelId !== id),
+      );
+
+      dispatch(removeChannelAction);
+      dispatch(removeMessagesAction);
+    };
 
     socket.on('newMessage', handleNewMessage);
     socket.on('newChannel', handleNewChannel);
