@@ -1,5 +1,5 @@
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
+import * as yup from 'yup';
 import {
   FormGroup, FormControl, Button, FormFloating, FormLabel,
 } from 'react-bootstrap';
@@ -12,7 +12,7 @@ import { useLoginMutation } from '../api/authenticateApi.js';
 import useLocalStorage from '../hooks/useLocalStorage.js';
 import { setUserData } from '../store/slices/auth.js';
 import avatar from '../assets/login.jpg';
-import appRoutes from '../containers/Routes/routesPath.js';
+import { appRoutes } from '../containers/Routes/routesPath.js';
 
 const Login = () => {
   const { setAuth } = useAuthContext();
@@ -25,9 +25,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const validateLoginSchema = Yup.object().shape({
-    username: Yup.string().required(t('loginPage.errors.usernameRequier')),
-    password: Yup.string().required(t('loginPage.errors.passwordRequired')),
+  const validateLoginSchema = yup.object().shape({
+    username: yup.string().required(t('loginPage.errors.usernameRequier')),
+    password: yup.string().required(t('loginPage.errors.passwordRequired')),
   });
 
   const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {

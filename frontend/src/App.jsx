@@ -10,7 +10,7 @@ import PrivateRoute from './containers/Routes/PrivateRoute.jsx';
 import Home from './pages/Home.jsx';
 import SignUp from './pages/SignUp.jsx';
 import NavBar from './components/NavBar.jsx';
-import appRoutes from './containers/Routes/routesPath.js';
+import { appRoutes } from './containers/Routes/routesPath.js';
 
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,

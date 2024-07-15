@@ -12,7 +12,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { setUserData } from '../store/slices/auth.js';
 import SignupComponent from '../components/SignupComponent';
 import signap from '../assets/signup.jpg';
-import appRoutes from '../containers/Routes/routesPath.js';
+import { appRoutes } from '../containers/Routes/routesPath.js';
 
 const SignUp = () => {
   const navigate = useNavigate();

@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import useSetHeaders from '../hooks/useSetHeaders';
+import { chatApiRoutes } from '../containers/Routes/routesPath';
 
 export const homeMessagessApi = createApi({
   reducerPath: 'messages',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/messages',
+    baseUrl: chatApiRoutes.messages(),
     prepareHeaders: useSetHeaders,
   }),
   endpoints: (builder) => ({
