@@ -1,5 +1,6 @@
 ### Autotests and linter status:
 [![Actions Status](https://github.com/ArthurFloyd/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ArthurFloyd/frontend-project-12/actions)
+[![Actions Status](https://github.com/ArthurFloyd/frontend-project-12/actions/workflows/eslint-check.yml/badge.svg)](https://github.com/ArthurFloyd/frontend-project-12/actions)
 
 # Chatty
 
