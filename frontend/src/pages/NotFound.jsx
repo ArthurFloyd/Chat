@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import notFound from '../assets/notFound.jpg';
+import notFound from '../assets/notFound.webp';
 import { appRoutes } from '../containers/Routes/routesPath';
 
 const NotFound = () => {

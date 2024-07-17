@@ -42,7 +42,7 @@ const NavBar = () => {
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <Link className="navbar-brand" to={appRoutes.chatPagePath()}>
-          Hexlet Chat
+          Chatty
         </Link>
         <Nav className="me-auto">
           <LanguageSelector />

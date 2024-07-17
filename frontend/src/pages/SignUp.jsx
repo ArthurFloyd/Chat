@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import useAuthContext from '../hooks/useAuthContext';
 import { useSignUpMutation } from '../api/authenticateApi';
 import SignupComponent from '../components/SignupComponent';
-import signap from '../assets/signup.jpg';
+import signup from '../assets/signup.jpg';
 import { appRoutes } from '../containers/Routes/routesPath.js';
 
 const SignUp = () => {
@@ -53,7 +53,7 @@ const SignUp = () => {
     }
   };
   return (
-    <SignupComponent avatar={signap}>
+    <SignupComponent avatar={signup}>
       <Formik
         initialValues={{ username: '', password: '', confirmPassword: '' }}
         onSubmit={handleFormSubmit}
