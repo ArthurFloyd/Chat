@@ -1,11 +1,11 @@
-### Hexlet tests and linter status:
+### Autotests and linter status:
 [![Actions Status](https://github.com/ArthurFloyd/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ArthurFloyd/frontend-project-12/actions)
 
-# Hexlet Chat
+# Chatty
 
-#### [Hexlet Chat](https://frontend-project-12-9.onrender.com/) - simplified version of Slack
+#### [Chatty](https://frontend-project-12-9.onrender.com/) - this is a simplified version of Slack
 
-Hexlet chat is a single-page application with registration and authentication.
+Сhatty is a single-page application with registration and authentication.
 All user actions are tracked and processed in real-time.
 There are permanent (default) channels in the chat, as well as user-created channels. Channels can also be renamed or deleted.
 Each user action is accompanied by a display of notification, so the interface is as friendly as possible.
@@ -25,7 +25,7 @@ There is support for two languages (ru, en) with switching between them at any t
 
 [2]: frontend/public/loginReadme.png "Login page screenshot"
 
-### 3. Chat-slack (Home page):
+### 3. Chatty (Home page):
   - **Sending messages** - users can enter and send text messages to other participants within the selected channel
   - **Channel management**:
     - Adding channels
